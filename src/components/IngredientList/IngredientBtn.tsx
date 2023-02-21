@@ -1,7 +1,11 @@
 import React from "react";
 
 const IngredientBtn = () => {
-  return <div></div>;
+  return (
+    <>
+      <button></button>
+    </>
+  );
 };
 
 export default IngredientBtn;
