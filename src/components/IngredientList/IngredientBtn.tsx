@@ -1,6 +1,6 @@
 import { addIngredients, removeIngredients } from "@/services/ingredient/slice";
 import React, { useState } from "react";
-import { useAppDispatch } from "store";
+import { useAppDispatch } from "@/store";
 interface Ingredient {
   IngredientName: string;
 }

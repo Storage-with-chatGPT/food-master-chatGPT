@@ -1,6 +1,6 @@
 import { IngredientItems } from "@/constants";
 import React from "react";
-import { useAppSelector } from "store";
+import { useAppSelector } from "@/store";
 import IngredientBtn from "./IngredientBtn";
 import SearchInput from "./SearchInput";
 
