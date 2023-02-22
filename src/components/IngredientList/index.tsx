@@ -1,9 +1,12 @@
 import { IngredientItems } from "@/constants";
 import React from "react";
+import { useAppSelector } from "store";
 import IngredientBtn from "./IngredientBtn";
 import SearchInput from "./SearchInput";
 
 const IngredientList = () => {
+  const Ingredients = useAppSelector((state) => state.ingredient.Ingredients);
+
   return (
     <div className="my-7">
       <div>
