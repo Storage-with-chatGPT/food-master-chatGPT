@@ -20,7 +20,12 @@ const IngredientBtn = ({ IngredientName }: Ingredient) => {
   };
 
   return (
-    <button onClick={handleOnClick} className="w-20 h-20 border-2 m-1 ">
+    <button
+      onClick={handleOnClick}
+      className={`w-20 h-20 border-2 m-1 ${
+        btnState ? "bg-gray-100" : "bg-blue-300"
+      } hover:bg-blue-200`}
+    >
       {IngredientName}
     </button>
   );
