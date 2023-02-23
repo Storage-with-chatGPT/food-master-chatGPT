@@ -3,7 +3,6 @@ import React, { useState } from "react";
 
 const SearchInput = () => {
   const [searchInput, setSearhInput] = useState("");
-  const [result, setResult] = useState("");
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearhInput(event.currentTarget.value);
@@ -43,8 +42,6 @@ const SearchInput = () => {
         placeholder="검색할 내용을 입력해주세요."
         onChange={handleOnChange}
       />
-      <button onClick={handleOnClick}>답변받기</button>
-      <div>{result}</div>
     </div>
   );
 };

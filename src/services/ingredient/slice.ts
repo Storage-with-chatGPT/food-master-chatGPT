@@ -1,22 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
-
-interface PayloadType {
-  payload: string;
-  type: string;
-}
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
   Ingredients: [] as string[],
+  searchValue: "",
 };
 
 export const ingredientSlice = createSlice({
   name: "ingredients",
   initialState,
   reducers: {
-    addIngredients: (state, action: PayloadType) => {
+    addIngredients: (state, action: PayloadAction<string>) => {
       state.Ingredients.push(action.payload);
     },
-    removeIngredients: (state, action: PayloadType) => {
+    removeIngredients: (state, action: PayloadAction<string>) => {
       state.Ingredients = state.Ingredients.filter(
         (value) => value !== action.payload
       );
