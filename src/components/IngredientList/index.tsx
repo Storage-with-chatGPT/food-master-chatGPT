@@ -10,12 +10,18 @@ const IngredientList = () => {
   const categoryValue = useAppSelector(
     (state) => state.ingredientList.category
   );
-
+  const searchValue = useAppSelector(
+    (state) => state.ingredientList.inputValue
+  );
   const [list, setList] = useState<string[]>([]);
 
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(selectCategory(event.currentTarget.value));
   };
+
+  const filterSearchValue = list.filter(
+    (item) => item.includes(searchValue) === true
+  );
 
   useEffect(() => {
     switch (categoryValue) {
@@ -39,9 +45,6 @@ const IngredientList = () => {
 
   return (
     <div className="my-7">
-      <div>
-        <SearchInput />
-      </div>
       <div className="flex flex-row justify-center space-x-10">
         <button onClick={handleOnClick} value="all">
           전체
@@ -59,12 +62,19 @@ const IngredientList = () => {
           기타
         </button>
       </div>
+      <div>
+        <SearchInput />
+      </div>
       <div className=" h-[300px] flex flex-raw flex-wrap justify-center  overflow-auto scrollbar-hide ">
-        {list.length !== 0
-          ? list.map((item, idx) => (
-              <IngredientBtn key={idx} IngredientName={item} />
+        {searchValue === ""
+          ? list.map((item) => (
+              <IngredientBtn key={item} IngredientName={item} />
             ))
-          : "재료가 없습니다 ㅠㅠ "}
+          : filterSearchValue.length === 0
+          ? "찾으시는 재료가 없습니다."
+          : filterSearchValue.map((item) => (
+              <IngredientBtn key={item} IngredientName={item} />
+            ))}
       </div>
     </div>
   );

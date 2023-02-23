@@ -1,19 +1,22 @@
-import axios from "axios";
+import { searchInputValue } from "@/services/ingredientList/slice";
+import { useAppDispatch, useAppSelector } from "@/store";
 import React, { useState } from "react";
 
 const SearchInput = () => {
-  const [searchInput, setSearhInput] = useState("");
-
+  const dispatch = useAppDispatch();
+  const searchValue = useAppSelector(
+    (state) => state.ingredientList.inputValue
+  );
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearhInput(event.currentTarget.value);
+    dispatch(searchInputValue(event.currentTarget.value.split(" ").join("")));
   };
 
   return (
     <div className="my-1">
       <input
         type="text"
-        value={searchInput}
-        placeholder="검색할 내용을 입력해주세요."
+        value={searchValue}
+        placeholder="검색 입력"
         onChange={handleOnChange}
       />
     </div>

@@ -8,6 +8,7 @@ const initialState = {
   grain: ingredientListItems.grain,
   acc: [],
   category: "meat",
+  inputValue: "",
 };
 
 export const ingredientListSlice = createSlice({
@@ -17,8 +18,11 @@ export const ingredientListSlice = createSlice({
     selectCategory: (state, action: PayloadAction<string>) => {
       state.category = action.payload;
     },
+    searchInputValue: (state, action: PayloadAction<string>) => {
+      state.inputValue = action.payload;
+    },
   },
 });
 
-export const { selectCategory } = ingredientListSlice.actions;
+export const { selectCategory, searchInputValue } = ingredientListSlice.actions;
 export default ingredientListSlice.reducer;
