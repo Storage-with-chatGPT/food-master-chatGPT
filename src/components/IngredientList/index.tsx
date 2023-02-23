@@ -19,6 +19,9 @@ const IngredientList = () => {
 
   useEffect(() => {
     switch (categoryValue) {
+      case "all":
+        setList(IngredientList.all);
+        break;
       case "meat":
         setList(IngredientList.meat);
         break;
@@ -28,6 +31,9 @@ const IngredientList = () => {
       case "grain":
         setList(IngredientList.grain);
         break;
+      case "acc":
+        setList(IngredientList.acc);
+        break;
     }
   }, [categoryValue]);
 
@@ -36,7 +42,10 @@ const IngredientList = () => {
       <div>
         <SearchInput />
       </div>
-      <div className="flex flex-row justify-center space-x-52">
+      <div className="flex flex-row justify-center space-x-10">
+        <button onClick={handleOnClick} value="all">
+          전체
+        </button>
         <button onClick={handleOnClick} value="meat">
           고기
         </button>
@@ -46,11 +55,16 @@ const IngredientList = () => {
         <button onClick={handleOnClick} value="grain">
           곡물
         </button>
+        <button onClick={handleOnClick} value="acc">
+          기타
+        </button>
       </div>
       <div className=" h-[300px] flex flex-raw flex-wrap justify-center  overflow-auto scrollbar-hide ">
-        {list.map((item, idx) => (
-          <IngredientBtn key={idx} IngredientName={item} />
-        ))}
+        {list.length !== 0
+          ? list.map((item, idx) => (
+              <IngredientBtn key={idx} IngredientName={item} />
+            ))
+          : "재료가 없습니다 ㅠㅠ "}
       </div>
     </div>
   );

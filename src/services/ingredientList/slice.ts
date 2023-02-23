@@ -1,10 +1,12 @@
-import { IngredientListItems } from "@/constants";
+import { allIngredientListItems, ingredientListItems } from "@/constants";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  meat: IngredientListItems.meat,
-  vegetable: IngredientListItems.vegetable,
-  grain: IngredientListItems.grain,
+  all: allIngredientListItems,
+  meat: ingredientListItems.meat,
+  vegetable: ingredientListItems.vegetable,
+  grain: ingredientListItems.grain,
+  acc: [],
   category: "meat",
 };
 

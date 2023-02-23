@@ -1,4 +1,4 @@
-export const IngredientListItems = {
+export const ingredientListItems = {
   meat: [
     "쇠고기",
     "돼지고기",
@@ -62,3 +62,8 @@ export const IngredientListItems = {
     "오트밀",
   ],
 };
+
+export const allIngredientListItems = ingredientListItems.meat.concat(
+  ingredientListItems.vegetable,
+  ingredientListItems.grain
+);
