@@ -1,21 +1,24 @@
-import { addIngredients, removeIngredients } from "@/services/ingredient/slice";
 import React, { useState } from "react";
-import { useAppDispatch } from "@/store";
-interface Ingredient {
-  IngredientName: string;
-}
+import { useAppDispatch, useAppSelector } from "@/store";
+import { IngredientType } from "@/types";
+import {
+  addIngredients,
+  removeIngredients,
+} from "@/services/ingredientList/slice";
 
-const IngredientBtn = ({ IngredientName }: Ingredient) => {
-  const [btnState, setBtnState] = useState(true);
+const IngredientBtn = ({ type, name, state }: IngredientType) => {
+  const [btnState, setBtnState] = useState(state);
   const dispatch = useAppDispatch();
+
+  // TODO : 이거 써야 됨.
+  const IngredientList = useAppSelector((state) => state.ingredientList);
+
   const handleOnClick = () => {
     setBtnState(!btnState);
-    // 버튼 상태값이 true인 경우
-    if (btnState) {
-      dispatch(addIngredients(IngredientName));
+    if (!btnState) {
+      dispatch(addIngredients({ type, name, state: btnState }));
     } else {
-      // 버튼 상태값이 false인 경우
-      dispatch(removeIngredients(IngredientName));
+      dispatch(removeIngredients({ type, name, state }));
     }
   };
 
@@ -23,10 +26,10 @@ const IngredientBtn = ({ IngredientName }: Ingredient) => {
     <button
       onClick={handleOnClick}
       className={`w-20 h-20 border-2 m-1 ${
-        btnState ? "bg-gray-100" : "bg-blue-300"
+        btnState ? "bg-blue-300" : "bg-gray-100"
       } hover:bg-blue-200`}
     >
-      {IngredientName}
+      {name}
     </button>
   );
 };

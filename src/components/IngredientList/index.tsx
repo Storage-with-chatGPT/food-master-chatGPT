@@ -3,48 +3,63 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import IngredientBtn from "./IngredientBtn";
 import SearchInput from "./SearchInput";
 import { selectCategory } from "@/services/ingredientList/slice";
+import { IngredientType } from "@/types";
 
 const IngredientList = () => {
   const dispatch = useAppDispatch();
+
   const IngredientList = useAppSelector((state) => state.ingredientList);
+
   const categoryValue = useAppSelector(
     (state) => state.ingredientList.category
   );
+
   const searchValue = useAppSelector(
     (state) => state.ingredientList.inputValue
   );
-  const [list, setList] = useState<string[]>([]);
+
+  // TODO : 이 list를 상수로 해서 관리하자
+  const [list, setList] = useState<IngredientType[]>([]);
 
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(selectCategory(event.currentTarget.value));
   };
 
-  const filterSearchValue = list.filter(
-    (item) => item.includes(searchValue) === true
-  );
-
   useEffect(() => {
     switch (categoryValue) {
       case "all":
-        setList(IngredientList.all);
+        setList(IngredientList.ingredientList);
         break;
       case "meat":
-        setList(IngredientList.meat);
+        setList(
+          IngredientList.ingredientList.filter((value) => value.type === "meat")
+        );
         break;
       case "vegetable":
-        setList(IngredientList.vegetable);
+        setList(
+          IngredientList.ingredientList.filter(
+            (value) => value.type === "vegetable"
+          )
+        );
         break;
       case "grain":
-        setList(IngredientList.grain);
+        setList(
+          IngredientList.ingredientList.filter(
+            (value) => value.type === "grain"
+          )
+        );
         break;
       case "acc":
-        setList(IngredientList.acc);
+        setList(
+          IngredientList.ingredientList.filter((value) => value.type === "acc")
+        );
         break;
     }
   }, [categoryValue]);
 
   return (
     <div className="my-7">
+      {/* //TODO : 상수 값으로 반복문 돌려서 관리 */}
       <div className="flex flex-row justify-center space-x-10">
         <button onClick={handleOnClick} value="all">
           전체
@@ -66,15 +81,14 @@ const IngredientList = () => {
         <SearchInput />
       </div>
       <div className=" h-[300px] flex flex-raw flex-wrap justify-center  overflow-auto scrollbar-hide ">
-        {searchValue === ""
-          ? list.map((item) => (
-              <IngredientBtn key={item} IngredientName={item} />
-            ))
-          : filterSearchValue.length === 0
-          ? "찾으시는 재료가 없습니다."
-          : filterSearchValue.map((item) => (
-              <IngredientBtn key={item} IngredientName={item} />
-            ))}
+        {list.map((item) => (
+          <IngredientBtn
+            key={item.name}
+            type={item.type}
+            name={item.name}
+            state={item.state}
+          />
+        ))}
       </div>
     </div>
   );
