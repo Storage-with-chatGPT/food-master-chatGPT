@@ -11,7 +11,7 @@ const SelectItem = () => {
       {/* 선택한 재료 */}
       <div className="flex flex-row space-x-1">
         {Ingredients.map((item, idx) => (
-          <p key={idx}>{item.name}</p>
+          <p key={idx}>{item}</p>
         ))}
       </div>
     </div>

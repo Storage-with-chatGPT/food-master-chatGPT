@@ -58,7 +58,6 @@ const IngredientList = () => {
 
   return (
     <div className="my-7">
-      {/* //TODO : 상수 값으로 반복문 돌려서 관리 */}
       <div className="flex flex-row justify-center space-x-10">
         {categoryBtn.map((item, idx) => (
           <button
@@ -78,7 +77,6 @@ const IngredientList = () => {
           ? list.map((item) => (
               <IngredientBtn
                 key={item.name}
-                type={item.type}
                 name={item.name}
                 state={item.state}
               />
@@ -86,7 +84,6 @@ const IngredientList = () => {
           : filterSearchValue.map((item) => (
               <IngredientBtn
                 key={item.name}
-                type={item.type}
                 name={item.name}
                 state={item.state}
               />

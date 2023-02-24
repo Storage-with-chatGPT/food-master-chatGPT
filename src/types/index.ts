@@ -1,5 +1,5 @@
 export interface IngredientType {
-  type: string;
+  type?: string;
   name: string;
   state: boolean;
 }
