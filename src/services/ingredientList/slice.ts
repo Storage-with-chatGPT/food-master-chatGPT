@@ -29,6 +29,12 @@ export const ingredientListSlice = createSlice({
       state.ingredientList[
         state.ingredientList.findIndex((value) => value.name === action.payload)
       ].state = true;
+
+      state.ingredientViewList[
+        state.ingredientViewList.findIndex(
+          (value) => value.name === action.payload
+        )
+      ].state = true;
     },
     // 재료 선택 리스트에서 제거
     removeIngredients: (state, action: PayloadAction<string>) => {
@@ -37,6 +43,12 @@ export const ingredientListSlice = createSlice({
       );
       state.ingredientList[
         state.ingredientList.findIndex((value) => value.name === action.payload)
+      ].state = false;
+
+      state.ingredientViewList[
+        state.ingredientViewList.findIndex(
+          (value) => value.name === action.payload
+        )
       ].state = false;
     },
 

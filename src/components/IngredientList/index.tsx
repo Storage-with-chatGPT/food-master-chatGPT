@@ -21,6 +21,7 @@ const IngredientList = () => {
   const list = useAppSelector(
     (state) => state.ingredientList.ingredientViewList
   );
+
   const filterSearchValue = list.filter(
     (item) => item.name.includes(searchValue) === true
   );
@@ -98,13 +99,15 @@ const IngredientList = () => {
                 state={item.state}
               />
             ))
-          : filterSearchValue.map((item) => (
-              <IngredientBtn
-                key={item.name}
-                name={item.name}
-                state={item.state}
-              />
-            ))}
+          : list
+              .filter((item) => item.name.includes(searchValue) === true)
+              .map((item) => (
+                <IngredientBtn
+                  key={item.name}
+                  name={item.name}
+                  state={item.state}
+                />
+              ))}
       </div>
     </div>
   );
