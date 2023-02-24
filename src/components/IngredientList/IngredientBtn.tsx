@@ -10,6 +10,7 @@ import {
 import { BsTrash } from "react-icons/bs";
 import { CiSettings } from "react-icons/ci";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
+import { validateInput } from "@/utils/validation";
 
 const IngredientBtn = ({ name, state }: IngredientType) => {
   const [btnState, setBtnState] = useState(state);
@@ -35,6 +36,11 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
   };
   // TODO: window.confirm 으로 확인하기 OR Toast Message 구현 해보기
   const updateIngredient = () => {
+    if (!validateInput(editModeInput)) {
+      alert("다시한번 확인해주세요.(특수문자/자음/모음/숫자/띄어쓰기 금지)");
+      setEditModeInput(name);
+      return;
+    }
     setEditModeState(!editModeState);
     dispatch(updateIngredientList({ name, editModeInput }));
   };
