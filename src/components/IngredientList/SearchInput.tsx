@@ -7,6 +7,7 @@ const SearchInput = () => {
   const searchValue = useAppSelector(
     (state) => state.ingredientList.inputValue
   );
+
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(searchInputValue(event.currentTarget.value.split(" ").join("")));
   };

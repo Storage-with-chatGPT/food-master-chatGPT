@@ -18,8 +18,11 @@ const IngredientList = () => {
     (state) => state.ingredientList.inputValue
   );
 
-  // TODO : 이 list를 상수로 해서 관리하자
   const [list, setList] = useState<IngredientType[]>([]);
+
+  const filterSearchValue = list.filter(
+    (item) => item.name.includes(searchValue) === true
+  );
 
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(selectCategory(event.currentTarget.value));
@@ -81,14 +84,23 @@ const IngredientList = () => {
         <SearchInput />
       </div>
       <div className=" h-[300px] flex flex-raw flex-wrap justify-center  overflow-auto scrollbar-hide ">
-        {list.map((item) => (
-          <IngredientBtn
-            key={item.name}
-            type={item.type}
-            name={item.name}
-            state={item.state}
-          />
-        ))}
+        {searchValue === ""
+          ? list.map((item) => (
+              <IngredientBtn
+                key={item.name}
+                type={item.type}
+                name={item.name}
+                state={item.state}
+              />
+            ))
+          : filterSearchValue.map((item) => (
+              <IngredientBtn
+                key={item.name}
+                type={item.type}
+                name={item.name}
+                state={item.state}
+              />
+            ))}
       </div>
     </div>
   );

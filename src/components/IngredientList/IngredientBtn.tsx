@@ -10,13 +10,10 @@ const IngredientBtn = ({ type, name, state }: IngredientType) => {
   const [btnState, setBtnState] = useState(state);
   const dispatch = useAppDispatch();
 
-  // TODO : 이거 써야 됨.
-  const IngredientList = useAppSelector((state) => state.ingredientList);
-
   const handleOnClick = () => {
     setBtnState(!btnState);
     if (!btnState) {
-      dispatch(addIngredients({ type, name, state: btnState }));
+      dispatch(addIngredients({ type, name, state }));
     } else {
       dispatch(removeIngredients({ type, name, state }));
     }

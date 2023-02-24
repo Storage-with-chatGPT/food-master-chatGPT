@@ -16,9 +16,11 @@ export const ingredientListSlice = createSlice({
     selectCategory: (state, action: PayloadAction<string>) => {
       state.category = action.payload;
     },
+
     searchInputValue: (state, action: PayloadAction<string>) => {
       state.inputValue = action.payload;
     },
+
     addIngredients: (state, action: PayloadAction<IngredientType>) => {
       state.SelectIngredients.push(action.payload);
       state.ingredientList[
