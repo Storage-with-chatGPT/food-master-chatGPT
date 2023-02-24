@@ -4,22 +4,18 @@ import IngredientBtn from "./IngredientBtn";
 import SearchInput from "./SearchInput";
 import { selectCategory } from "@/services/ingredientList/slice";
 import { IngredientType } from "@/types";
+import { categoryBtn } from "@/constants";
 
 const IngredientList = () => {
   const dispatch = useAppDispatch();
-
   const IngredientList = useAppSelector((state) => state.ingredientList);
-
   const categoryValue = useAppSelector(
     (state) => state.ingredientList.category
   );
-
   const searchValue = useAppSelector(
     (state) => state.ingredientList.inputValue
   );
-
   const [list, setList] = useState<IngredientType[]>([]);
-
   const filterSearchValue = list.filter(
     (item) => item.name.includes(searchValue) === true
   );
@@ -64,21 +60,15 @@ const IngredientList = () => {
     <div className="my-7">
       {/* //TODO : 상수 값으로 반복문 돌려서 관리 */}
       <div className="flex flex-row justify-center space-x-10">
-        <button onClick={handleOnClick} value="all">
-          전체
-        </button>
-        <button onClick={handleOnClick} value="meat">
-          고기
-        </button>
-        <button onClick={handleOnClick} value="vegetable">
-          채소
-        </button>
-        <button onClick={handleOnClick} value="grain">
-          곡물
-        </button>
-        <button onClick={handleOnClick} value="acc">
-          기타
-        </button>
+        {categoryBtn.map((item, idx) => (
+          <button
+            key={`category_btn_${idx}`}
+            onClick={handleOnClick}
+            value={Object.values(item)}
+          >
+            {Object.keys(item)}
+          </button>
+        ))}
       </div>
       <div>
         <SearchInput />

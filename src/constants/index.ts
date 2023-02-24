@@ -56,3 +56,11 @@ export const ingredientListItems = [
   { type: "grain", name: "메밀", state: false },
   { type: "grain", name: "오트밀", state: false },
 ];
+
+export const categoryBtn = [
+  { 전체: "all" },
+  { 고기: "meat" },
+  { 채소: "vegetable" },
+  { 곡물: "grain" },
+  { 기타: "acc" },
+];
