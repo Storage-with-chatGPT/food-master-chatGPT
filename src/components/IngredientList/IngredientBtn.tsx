@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useAppDispatch } from "@/store";
+import React, { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { IngredientType } from "@/types";
 import {
   addIngredients,
@@ -28,18 +28,19 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
 
   const setIconOnClick = () => {
     setEditModeState(!editModeState);
-    setEditModeInput(name);
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEditModeInput(event.currentTarget.value.split(" ").join(""));
   };
-  // TODO: window.confirm 으로 확인하기
+  // TODO: window.confirm 으로 확인하기 OR Toast Message 구현 해보기
   const updateIngredient = () => {
+    setEditModeState(!editModeState);
     dispatch(updateIngredientList({ name, editModeInput }));
   };
 
   const deleteIngredient = () => {
+    setEditModeState(!editModeState);
     dispatch(deleteIngredientList(name));
   };
 
@@ -61,7 +62,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
           btnState ? "bg-blue-300" : "bg-gray-100"
         } hover:bg-blue-200`}
       >
-        {name}
+        {editModeInput}
       </button>
     </div>
   ) : (

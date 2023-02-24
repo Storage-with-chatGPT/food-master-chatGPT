@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import IngredientBtn from "./IngredientBtn";
 import SearchInput from "./SearchInput";
-import { selectCategory } from "@/services/ingredientList/slice";
-import { IngredientType } from "@/types";
+import {
+  selectCategory,
+  setIngredientViewList,
+} from "@/services/ingredientList/slice";
 import { categoryBtn } from "@/constants";
 
 const IngredientList = () => {
@@ -15,7 +17,10 @@ const IngredientList = () => {
   const searchValue = useAppSelector(
     (state) => state.ingredientList.inputValue
   );
-  const [list, setList] = useState<IngredientType[]>([]);
+
+  const list = useAppSelector(
+    (state) => state.ingredientList.ingredientViewList
+  );
   const filterSearchValue = list.filter(
     (item) => item.name.includes(searchValue) === true
   );
@@ -27,30 +32,42 @@ const IngredientList = () => {
   useEffect(() => {
     switch (categoryValue) {
       case "all":
-        setList(IngredientList.ingredientList);
+        dispatch(setIngredientViewList(IngredientList.ingredientList));
         break;
       case "meat":
-        setList(
-          IngredientList.ingredientList.filter((value) => value.type === "meat")
+        dispatch(
+          setIngredientViewList(
+            IngredientList.ingredientList.filter(
+              (value) => value.type === "meat"
+            )
+          )
         );
         break;
       case "vegetable":
-        setList(
-          IngredientList.ingredientList.filter(
-            (value) => value.type === "vegetable"
+        dispatch(
+          setIngredientViewList(
+            IngredientList.ingredientList.filter(
+              (value) => value.type === "vegetable"
+            )
           )
         );
         break;
       case "grain":
-        setList(
-          IngredientList.ingredientList.filter(
-            (value) => value.type === "grain"
+        dispatch(
+          setIngredientViewList(
+            IngredientList.ingredientList.filter(
+              (value) => value.type === "grain"
+            )
           )
         );
         break;
       case "acc":
-        setList(
-          IngredientList.ingredientList.filter((value) => value.type === "acc")
+        dispatch(
+          setIngredientViewList(
+            IngredientList.ingredientList.filter(
+              (value) => value.type === "acc"
+            )
+          )
         );
         break;
     }

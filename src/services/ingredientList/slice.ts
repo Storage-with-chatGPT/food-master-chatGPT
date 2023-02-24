@@ -5,8 +5,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState = {
   category: "meat",
   inputValue: "",
-  ingredientList: ingredientListItems,
+  updateFlag: false,
   SelectIngredients: [] as string[],
+  ingredientList: ingredientListItems,
+  ingredientViewList: [] as IngredientType[],
 };
 
 export const ingredientListSlice = createSlice({
@@ -37,6 +39,11 @@ export const ingredientListSlice = createSlice({
         state.ingredientList.findIndex((value) => value.name === action.payload)
       ].state = false;
     },
+
+    setIngredientViewList: (state, action) => {
+      state.ingredientViewList = action.payload;
+    },
+
     // 재료 리스트 이름 변경
     updateIngredientList: (state, action) => {
       state.ingredientList[
@@ -44,10 +51,21 @@ export const ingredientListSlice = createSlice({
           (value) => value.name === action.payload.name
         )
       ].name = action.payload.editModeInput;
+
+      state.ingredientViewList[
+        state.ingredientViewList.findIndex(
+          (value) => value.name === action.payload.name
+        )
+      ].name = action.payload.editModeInput;
     },
+
     // 재료 리스트삭제
     deleteIngredientList: (state, action: PayloadAction<string>) => {
       state.ingredientList = state.ingredientList.filter(
+        (value) => value.name !== action.payload
+      );
+
+      state.ingredientViewList = state.ingredientViewList.filter(
         (value) => value.name !== action.payload
       );
     },
@@ -59,6 +77,7 @@ export const {
   searchInputValue,
   addIngredients,
   removeIngredients,
+  setIngredientViewList,
   updateIngredientList,
   deleteIngredientList,
 } = ingredientListSlice.actions;
