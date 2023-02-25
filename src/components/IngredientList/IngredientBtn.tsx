@@ -119,7 +119,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
         } `}
       >
         <input
-          className="w-14"
+          className="w-14 pl-2"
           type="text"
           value={editModeInput}
           onChange={handleOnChange}
