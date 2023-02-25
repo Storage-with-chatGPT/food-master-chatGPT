@@ -10,4 +10,4 @@ assignees: baechanghyeon
 ## 목적
 -
 ## 상세 내용
--[ ]
+- [ ]

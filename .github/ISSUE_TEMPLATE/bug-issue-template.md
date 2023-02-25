@@ -10,6 +10,6 @@ assignees: baechanghyeon
 ## 에러 내용
 -
 ## 해결 여부
--[ ]
+- [ ]
 ## 해결 방법
 -
