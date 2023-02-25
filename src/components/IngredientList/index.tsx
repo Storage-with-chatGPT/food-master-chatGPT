@@ -139,7 +139,7 @@ const IngredientList = () => {
             {addBtnState ? (
               <>
                 <input
-                  className="w-14"
+                  className="w-14 pl-2"
                   type="text"
                   value={addIngredientInput}
                   onChange={(event) =>
