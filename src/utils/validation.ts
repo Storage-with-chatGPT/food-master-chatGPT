@@ -10,3 +10,10 @@ export const validateInput = (inputValue: string) => {
   // 그 외 경우 true 반환
   return true;
 };
+
+export const longValueReplace = (inputValue: string) => {
+  if (inputValue.length > 9) {
+    return (inputValue = inputValue.substring(0, 9) + "...");
+  }
+  return inputValue;
+};

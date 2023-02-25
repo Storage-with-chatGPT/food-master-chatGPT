@@ -10,7 +10,7 @@ import {
 import { BsTrash } from "react-icons/bs";
 import { CiSettings } from "react-icons/ci";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
-import { validateInput } from "@/utils/validation";
+import { longValueReplace, validateInput } from "@/utils/validation";
 
 const IngredientBtn = ({ name, state }: IngredientType) => {
   const [btnState, setBtnState] = useState(state);
@@ -85,9 +85,9 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
         onClick={handleOnClick}
         className={`w-20 h-20 border-2 m-1 ${
           btnState ? "bg-blue-300" : "bg-gray-100"
-        } hover:bg-blue-200`}
+        } hover:bg-blue-200 ease-in duration-150 `}
       >
-        {editModeInput}
+        {longValueReplace(editModeInput)}
       </button>
     </div>
   ) : (

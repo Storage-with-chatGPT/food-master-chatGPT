@@ -156,7 +156,7 @@ const IngredientList = () => {
                 <p>재료 추가</p>
                 <RxPlusCircled
                   onClick={() => setAddBtnState(!addBtnState)}
-                  className="w-full text-2xl text-center text-gray-500 hover:text-blue-300"
+                  className="w-full text-2xl text-center text-gray-500 hover:text-blue-300 ease-in duration-150"
                 />
               </>
             )}
