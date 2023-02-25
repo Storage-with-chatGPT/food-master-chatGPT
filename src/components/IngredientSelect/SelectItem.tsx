@@ -2,7 +2,9 @@ import React from "react";
 import { useAppSelector } from "@/store";
 
 const SelectItem = () => {
-  const Ingredients = useAppSelector((state) => state.ingredient.Ingredients);
+  const Ingredients = useAppSelector(
+    (state) => state.ingredientList.SelectIngredients
+  );
 
   return (
     <div>
