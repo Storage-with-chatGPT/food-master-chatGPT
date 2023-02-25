@@ -20,10 +20,6 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
   const ingredientList = useAppSelector(
     (state) => state.ingredientList.ingredientList
   );
-  // 중복 검사 Validation
-  const duplicationCheck = ingredientList.map(
-    (item) => item.name === editModeInput
-  );
 
   const handleOnClick = () => {
     setBtnState(!btnState);
@@ -36,6 +32,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
 
   const setIconOnClick = () => {
     setEditModeState(!editModeState);
+    setEditModeInput(name);
   };
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,16 +40,21 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
   };
   // TODO: window.confirm 으로 확인하기 OR Toast Message 구현 해보기
   const updateIngredient = () => {
+    // 중복 검사 Validation
+    const duplicationCheck = ingredientList.filter(
+      (item) => item.name === editModeInput
+    );
+
     if (!validateInput(editModeInput)) {
       alert("다시한번 확인해주세요.(특수문자/자음/모음/숫자 금지)");
       setEditModeInput(name);
       return;
     }
 
-    if (duplicationCheck) {
+    if (duplicationCheck.length > 0) {
       if (name === editModeInput) alert("현재 선택한 재료명과 동일 합니다.");
       else {
-        alert("이미 등록되어있는 재료 입니다.");
+        alert("이미 등록 되어있는 재료 입니다.");
         setEditModeInput(name);
       }
       return;
@@ -93,11 +95,11 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
       <div className="flex flex-row">
         <AiOutlineCheck
           onClick={updateIngredient}
-          className="text-base absolute top-2 right-11 hover:text-blue-200 cursor-pointer"
+          className="text-base absolute top-2 right-11 hover:text-green-300 cursor-pointer"
         />
         <BsTrash
           onClick={deleteIngredient}
-          className="text-base absolute top-2 right-6 hover:text-blue-200 cursor-pointer"
+          className="text-base absolute top-2 right-6 hover:text-red-300 cursor-pointer"
         />
         <AiOutlineClose
           onClick={setIconOnClick}

@@ -3,9 +3,8 @@ import { IngredientType } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  category: "meat",
+  category: "all",
   inputValue: "",
-  updateFlag: false,
   SelectIngredients: [] as string[],
   ingredientList: ingredientListItems,
   ingredientViewList: [] as IngredientType[],
@@ -51,9 +50,15 @@ export const ingredientListSlice = createSlice({
         )
       ].state = false;
     },
-
+    // 카테고리 선택 시 ViewList 해당 데이터로 변경
     setIngredientViewList: (state, action) => {
       state.ingredientViewList = action.payload;
+    },
+
+    // 재료 리스트 재료 추가
+    addIngredientList: (state, action) => {
+      state.ingredientList.unshift(action.payload);
+      state.ingredientViewList.unshift(action.payload);
     },
 
     // 재료 리스트 이름 변경
@@ -90,6 +95,7 @@ export const {
   addIngredients,
   removeIngredients,
   setIngredientViewList,
+  addIngredientList,
   updateIngredientList,
   deleteIngredientList,
 } = ingredientListSlice.actions;
