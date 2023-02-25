@@ -38,6 +38,11 @@ const IngredientList = () => {
       (item) => item.name === addIngredientInput
     );
 
+    if (addIngredientInput.length === 0) {
+      alert("빈값은 재료로 등록할 수 없습니다.");
+      return;
+    }
+
     if (!validateInput(addIngredientInput)) {
       alert("다시한번 확인해주세요.(특수문자/자음/모음/숫자 금지)");
       setAddIngredientInput("");
