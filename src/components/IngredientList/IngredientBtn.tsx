@@ -47,6 +47,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
 
     if (editModeInput.length === 0) {
       alert("빈값은 재료로 등록할 수 없습니다.");
+      setEditModeInput(name);
       return;
     }
 

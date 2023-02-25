@@ -70,6 +70,7 @@ const IngredientList = () => {
     setAddBtnState(!addBtnState);
     setAddIngredientInput("");
   };
+
   useEffect(() => {
     switch (categoryValue) {
       case "all":
@@ -127,14 +128,14 @@ const IngredientList = () => {
           </button>
         ))}
       </div>
-      <div>
+      <div className="w-auto my-1 flex flex-raw justify-center">
         <SearchInput />
       </div>
       <div className=" h-[300px] flex flex-raw flex-wrap justify-center  overflow-auto scrollbar-hide ">
         {category === "all" || searchValue !== "" ? (
           ""
         ) : (
-          <button className={`w-20 h-20 border-2 m-1 bg-gray-100  `}>
+          <button className={`w-20 h-20 border-2 m-1 bg-gray-100 `}>
             {addBtnState ? (
               <>
                 <input
