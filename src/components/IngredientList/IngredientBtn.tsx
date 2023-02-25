@@ -17,6 +17,13 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
   const [editModeState, setEditModeState] = useState(true);
   const [editModeInput, setEditModeInput] = useState(name);
   const dispatch = useAppDispatch();
+  const ingredientList = useAppSelector(
+    (state) => state.ingredientList.ingredientList
+  );
+  // 중복 검사 Validation
+  const duplicationCheck = ingredientList.map(
+    (item) => item.name === editModeInput
+  );
 
   const handleOnClick = () => {
     setBtnState(!btnState);
@@ -37,10 +44,20 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
   // TODO: window.confirm 으로 확인하기 OR Toast Message 구현 해보기
   const updateIngredient = () => {
     if (!validateInput(editModeInput)) {
-      alert("다시한번 확인해주세요.(특수문자/자음/모음/숫자/띄어쓰기 금지)");
+      alert("다시한번 확인해주세요.(특수문자/자음/모음/숫자 금지)");
       setEditModeInput(name);
       return;
     }
+
+    if (duplicationCheck) {
+      if (name === editModeInput) alert("현재 선택한 재료명과 동일 합니다.");
+      else {
+        alert("이미 등록되어있는 재료 입니다.");
+        setEditModeInput(name);
+      }
+      return;
+    }
+
     setEditModeState(!editModeState);
     dispatch(updateIngredientList({ name, editModeInput }));
   };

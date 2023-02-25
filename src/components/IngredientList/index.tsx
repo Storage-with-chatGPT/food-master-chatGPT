@@ -22,10 +22,6 @@ const IngredientList = () => {
     (state) => state.ingredientList.ingredientViewList
   );
 
-  const filterSearchValue = list.filter(
-    (item) => item.name.includes(searchValue) === true
-  );
-
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(selectCategory(event.currentTarget.value));
   };
