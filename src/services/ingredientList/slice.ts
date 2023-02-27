@@ -14,6 +14,7 @@ export const ingredientListSlice = createSlice({
   name: "ingredientList",
   initialState,
   reducers: {
+    //TODO : 카테고리 선택, 검색값을 다른 CommonSlice로 분리?
     // 카테고리 선택
     selectCategory: (state, action: PayloadAction<string>) => {
       state.category = action.payload;
@@ -22,6 +23,7 @@ export const ingredientListSlice = createSlice({
     searchInputValue: (state, action: PayloadAction<string>) => {
       state.inputValue = action.payload;
     },
+
     // 재료 선택 리스트에 추가
     addIngredients: (state, action: PayloadAction<string>) => {
       state.SelectIngredients.push(action.payload);
@@ -50,6 +52,14 @@ export const ingredientListSlice = createSlice({
         )
       ].state = false;
     },
+
+    // 재료 선택 리스트 전체 삭제
+    allDeleteSelectList: (state) => {
+      state.SelectIngredients = [];
+      state.ingredientList.forEach((item) => (item.state = false));
+      state.ingredientViewList.forEach((item) => (item.state = false));
+    },
+
     // 카테고리 선택 시 ViewList 해당 데이터로 변경
     setIngredientViewList: (state, action) => {
       state.ingredientViewList = action.payload;
@@ -94,6 +104,7 @@ export const {
   searchInputValue,
   addIngredients,
   removeIngredients,
+  allDeleteSelectList,
   setIngredientViewList,
   addIngredientList,
   updateIngredientList,
