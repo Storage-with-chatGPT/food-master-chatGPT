@@ -1,14 +1,18 @@
 import React from "react";
-import { useAppSelector } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { FaMinusSquare } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { allDeleteSelectList } from "@/services/ingredientList/slice";
 
 const SelectItems = () => {
-  const Ingredients = useAppSelector(
+  const dispatch = useAppDispatch();
+  const selectIngredients = useAppSelector(
     (state) => state.ingredientList.SelectIngredients
   );
 
-  const allDeleteOnClick = () => {};
+  const allDeleteOnClick = () => {
+    dispatch(allDeleteSelectList());
+  };
 
   return (
     <div className="flex flex-row">
@@ -23,7 +27,7 @@ const SelectItems = () => {
           </p>
         </div>
         <div className="flex flex-col w-32 text-white text-sm text-left ml-9 h-[190px] overflow-auto scrollbar-hide">
-          {Ingredients.map((item, idx) => (
+          {selectIngredients.map((item, idx) => (
             <div key={idx} className="flex flex-row ">
               <FaMinusSquare className="text-red-300 mt-1 mr-1" />
               <p className="hover:text-red-300 cursor-pointer">{item}</p>

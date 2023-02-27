@@ -52,8 +52,13 @@ export const ingredientListSlice = createSlice({
         )
       ].state = false;
     },
+
     // 재료 선택 리스트 전체 삭제
-    allDeleteSelectList: (state, action) => {},
+    allDeleteSelectList: (state) => {
+      state.SelectIngredients = [];
+      state.ingredientList.forEach((item) => (item.state = false));
+      state.ingredientViewList.forEach((item) => (item.state = false));
+    },
 
     // 카테고리 선택 시 ViewList 해당 데이터로 변경
     setIngredientViewList: (state, action) => {
@@ -99,6 +104,7 @@ export const {
   searchInputValue,
   addIngredients,
   removeIngredients,
+  allDeleteSelectList,
   setIngredientViewList,
   addIngredientList,
   updateIngredientList,

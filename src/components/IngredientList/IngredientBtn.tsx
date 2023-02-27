@@ -13,7 +13,6 @@ import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { longValueReplace, validateInput } from "@/utils/validation";
 
 const IngredientBtn = ({ name, state }: IngredientType) => {
-  const [btnState, setBtnState] = useState(state);
   const [editModeState, setEditModeState] = useState(true);
   const [editModeInput, setEditModeInput] = useState(name);
   const dispatch = useAppDispatch();
@@ -22,8 +21,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
   );
 
   const handleOnClick = () => {
-    setBtnState(!btnState);
-    if (!btnState) {
+    if (!state) {
       dispatch(addIngredients(name));
     } else {
       dispatch(removeIngredients(name));
@@ -78,7 +76,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
   return editModeState ? (
     <div>
       <div className="relative">
-        {btnState ? (
+        {state ? (
           ""
         ) : (
           <CiSettings
@@ -90,7 +88,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
       <button
         onClick={handleOnClick}
         className={`w-20 h-20 border-2 m-1 ${
-          btnState ? "bg-blue-300" : "bg-gray-100"
+          state ? "bg-blue-300" : "bg-gray-100"
         } hover:bg-blue-200 ease-in duration-150 `}
       >
         {longValueReplace(editModeInput)}
@@ -115,7 +113,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
 
       <button
         className={`w-20 h-20 border-2 m-1 ${
-          btnState ? "bg-blue-300" : "bg-gray-100"
+          state ? "bg-blue-300" : "bg-gray-100"
         } `}
       >
         <input
