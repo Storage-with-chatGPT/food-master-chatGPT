@@ -3,6 +3,7 @@ import { DataResponse } from "@/types";
 import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import SelectItems from "./SelectItems";
+import Refrigerator from "../../assets/refrigerator.svg";
 
 const IngredientSelect = () => {
   const test = ["고구마", "감자"];
@@ -23,7 +24,7 @@ const IngredientSelect = () => {
       <div className="flex flex-col w-[500px] items-center">
         <div className="text-center mt-1">마이 냉장고</div>
         <div className="flex flex-col w-[300px] h-[220px] m-2 ml-15 bg-yellow-50 justify-center items-center">
-          {menus.length > 0 ? <p>📖 추천 메뉴</p> : ""}
+          {menus.length > 0 ? <p>📖 추천 메뉴</p> : <Refrigerator />}
           {menus.map((item, idx) => (
             <button
               key={`menu_${idx}`}
