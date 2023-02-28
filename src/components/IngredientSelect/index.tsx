@@ -1,51 +1,74 @@
 import { QuetionChat } from "@/apis";
 import { DataResponse } from "@/types";
 import { AxiosResponse } from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SelectItems from "./SelectItems";
 import Refrigerator from "../../assets/refrigerator.svg";
-import { useAppSelector } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { setRecipe } from "@/services/recipe/slice";
+import { useRouter } from "next/router";
 
 const IngredientSelect = () => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const SelectIngredients = useAppSelector(
     (state) => state.ingredientList.SelectIngredients
   );
-  const SelectIngredientsString = SelectIngredients.join(" ").trim();
+  const selectIngredientsString = SelectIngredients.join(" ").trim();
 
   const [menus, setMenus] = useState<string[]>([]);
-  const [recipe, setRecipe] = useState<string[]>([]);
-
+  const [btnState, setBtnState] = useState(true);
+  const [disabledBtnState, setDisabledBtnState] = useState(false);
   const handleOnClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { name } = e.currentTarget;
+    const { name, value } = e.currentTarget;
     if (SelectIngredients.length < 1) {
       alert("1개이상의 재료를 선택해주세요.");
       return;
     }
 
-    console.log(name);
+    let quetion = "";
+    if (name === "recipe") quetion = value;
+    if (name === "menu") quetion = selectIngredientsString;
 
+    //TODO: 로딩 스피너 만들 시 console 대체
+    console.log("loading");
+    setDisabledBtnState(true);
     const { data }: AxiosResponse<DataResponse> = await QuetionChat(
-      SelectIngredientsString,
+      quetion,
       name
     );
+    setDisabledBtnState(false);
+    console.log("loading end");
+
+    setBtnState(false);
 
     if (name === "menu") {
       const formatMenuString = data.choices[0].text
         .trim()
         .split("\n")
-        .map((item) => item.replace(/^\d+\.\s*/, ""));
+        .map((item) => item.replace(/^\d+\.\s*/, ""))
+        .filter((item) => {
+          if (item === "" || item === ".") {
+            return false;
+          }
+          return true;
+        });
       setMenus(formatMenuString);
-      console.log(menus);
     }
 
     if (name === "recipe") {
+      router.push("/recipe");
       const formatRecipeString = data.choices[0].text
         .trim()
         .split("\n")
         .filter((item) => item !== "");
-      setRecipe(formatRecipeString);
+      dispatch(setRecipe(formatRecipeString));
     }
   };
+
+  useEffect(() => {
+    setBtnState(true);
+  }, [SelectIngredients]);
 
   return (
     <div className="flex flex-row h-full">
@@ -57,7 +80,7 @@ const IngredientSelect = () => {
           {menus.map((item, idx) => (
             <button
               name="recipe"
-              key={`menu_${idx}`}
+              key={`recipe_${idx}`}
               className="w-34 text-left border-2 border-red-50 m-1 pr-1 hover:text-white hover:bg-blue-200 ease-in duration-150 "
               value={item}
               onClick={handleOnClick}
@@ -69,10 +92,15 @@ const IngredientSelect = () => {
 
         <button
           onClick={handleOnClick}
-          className="w-[300px] ml-15 text-center border-2 border-gray-100 hover:text-white hover:bg-blut-200"
+          className={`${
+            disabledBtnState
+              ? "bg-gray-100 text-gray-200"
+              : "bg-white hover:text-white hover:bg-blue-200 text-gray-500"
+          } w-[300px] ml-15 text-center border-1 border-gray-100 `}
           name="menu"
+          disabled={disabledBtnState}
         >
-          Chat선생 메뉴 추천 받기
+          {btnState ? "Chat선생 메뉴 추천 받기 " : "추천 메뉴 다시 받기 "}
         </button>
       </div>
       <SelectItems />
