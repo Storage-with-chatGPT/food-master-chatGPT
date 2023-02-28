@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Barcode from "../assets/barcode.svg";
 import { BiArrowBack } from "react-icons/bi";
 import { useRouter } from "next/router";
-import PrivateRoute from "@/components/hoc/PrivateRoute";
+import PrivateRoute from "@/components/PrivateRoute";
 
 const Recipe = () => {
   const router = useRouter();
