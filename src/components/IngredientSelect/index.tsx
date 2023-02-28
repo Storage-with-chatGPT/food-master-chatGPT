@@ -1,7 +1,7 @@
 import { QuetionChat } from "@/apis";
 import { DataResponse } from "@/types";
 import { AxiosResponse } from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SelectItems from "./SelectItems";
 import Refrigerator from "../../assets/refrigerator.svg";
 import { useAppDispatch, useAppSelector } from "@/store";
@@ -17,10 +17,9 @@ const IngredientSelect = () => {
   const selectIngredientsString = SelectIngredients.join(" ").trim();
 
   const [menus, setMenus] = useState<string[]>([]);
-
+  const [btnState, setBtnState] = useState(true);
   const handleOnClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { name, value } = e.currentTarget;
-
     if (SelectIngredients.length < 1) {
       alert("1개이상의 재료를 선택해주세요.");
       return;
@@ -29,14 +28,15 @@ const IngredientSelect = () => {
     let quetion = "";
     if (name === "recipe") quetion = value;
     if (name === "menu") quetion = selectIngredientsString;
-
+    //TODO: 로딩 스피너 만들 시 console 대체
     console.log("loading");
     const { data }: AxiosResponse<DataResponse> = await QuetionChat(
       quetion,
       name
     );
-    console.log(data.choices[0].text);
     console.log("loading end");
+
+    setBtnState(false);
 
     if (name === "menu") {
       const formatMenuString = data.choices[0].text
@@ -63,6 +63,10 @@ const IngredientSelect = () => {
     }
   };
 
+  useEffect(() => {
+    setBtnState(true);
+  }, [SelectIngredients]);
+
   return (
     <div className="flex flex-row h-full">
       <div className="flex flex-col w-[500px] items-center">
@@ -88,7 +92,7 @@ const IngredientSelect = () => {
           className="w-[300px] ml-15 text-center border-2 border-gray-100 hover:text-white hover:bg-blut-200"
           name="menu"
         >
-          Chat선생 메뉴 추천 받기
+          {btnState ? "Chat선생 메뉴 추천 받기 👨🏻‍🍳" : "추천 메뉴 다시 받기 🙉"}
         </button>
       </div>
       <SelectItems />
