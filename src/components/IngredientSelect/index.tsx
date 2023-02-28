@@ -18,6 +18,7 @@ const IngredientSelect = () => {
 
   const [menus, setMenus] = useState<string[]>([]);
   const [btnState, setBtnState] = useState(true);
+  const [disabledBtnState, setDisabledBtnState] = useState(false);
   const handleOnClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { name, value } = e.currentTarget;
     if (SelectIngredients.length < 1) {
@@ -28,12 +29,15 @@ const IngredientSelect = () => {
     let quetion = "";
     if (name === "recipe") quetion = value;
     if (name === "menu") quetion = selectIngredientsString;
+
     //TODO: 로딩 스피너 만들 시 console 대체
     console.log("loading");
+    setDisabledBtnState(true);
     const { data }: AxiosResponse<DataResponse> = await QuetionChat(
       quetion,
       name
     );
+    setDisabledBtnState(false);
     console.log("loading end");
 
     setBtnState(false);
@@ -49,17 +53,16 @@ const IngredientSelect = () => {
           }
           return true;
         });
-
       setMenus(formatMenuString);
     }
 
     if (name === "recipe") {
+      router.push("/recipe");
       const formatRecipeString = data.choices[0].text
         .trim()
         .split("\n")
         .filter((item) => item !== "");
       dispatch(setRecipe(formatRecipeString));
-      router.push("/recipe");
     }
   };
 
@@ -89,10 +92,15 @@ const IngredientSelect = () => {
 
         <button
           onClick={handleOnClick}
-          className="w-[300px] ml-15 text-center border-2 border-gray-100 hover:text-white hover:bg-blut-200"
+          className={`${
+            disabledBtnState
+              ? "bg-gray-100 text-gray-200"
+              : "bg-white hover:text-white hover:bg-blue-200 text-gray-500"
+          } w-[300px] ml-15 text-center border-1 border-gray-100 `}
           name="menu"
+          disabled={disabledBtnState}
         >
-          {btnState ? "Chat선생 메뉴 추천 받기 👨🏻‍🍳" : "추천 메뉴 다시 받기 🙉"}
+          {btnState ? "Chat선생 메뉴 추천 받기 " : "추천 메뉴 다시 받기 "}
         </button>
       </div>
       <SelectItems />
