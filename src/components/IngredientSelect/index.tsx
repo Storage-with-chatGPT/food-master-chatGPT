@@ -4,30 +4,39 @@ import { AxiosResponse } from "axios";
 import React, { useState } from "react";
 import SelectItems from "./SelectItems";
 import Refrigerator from "../../assets/refrigerator.svg";
-import { useAppSelector } from "@/store";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { setRecipe } from "@/services/recipe/slice";
+import { useRouter } from "next/router";
 
 const IngredientSelect = () => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const SelectIngredients = useAppSelector(
     (state) => state.ingredientList.SelectIngredients
   );
-  const SelectIngredientsString = SelectIngredients.join(" ").trim();
+  const selectIngredientsString = SelectIngredients.join(" ").trim();
+  const selectMenu = useAppSelector((state) => state.recipe.recipe);
 
   const [menus, setMenus] = useState<string[]>([]);
-  const [recipe, setRecipe] = useState<string[]>([]);
 
   const handleOnClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { name } = e.currentTarget;
+    const { name, value } = e.currentTarget;
+
     if (SelectIngredients.length < 1) {
       alert("1개이상의 재료를 선택해주세요.");
       return;
     }
 
-    console.log(name);
+    let quetion = "";
+    if (name === "recipe") quetion = value;
+    if (name === "menu") quetion = selectIngredientsString;
 
+    console.log("loading");
     const { data }: AxiosResponse<DataResponse> = await QuetionChat(
-      SelectIngredientsString,
+      quetion,
       name
     );
+    console.log("loading end");
 
     if (name === "menu") {
       const formatMenuString = data.choices[0].text
@@ -43,7 +52,8 @@ const IngredientSelect = () => {
         .trim()
         .split("\n")
         .filter((item) => item !== "");
-      setRecipe(formatRecipeString);
+      dispatch(setRecipe(formatRecipeString));
+      router.push("/recipe");
     }
   };
 
@@ -57,7 +67,7 @@ const IngredientSelect = () => {
           {menus.map((item, idx) => (
             <button
               name="recipe"
-              key={`menu_${idx}`}
+              key={`recipe_${idx}`}
               className="w-34 text-left border-2 border-red-50 m-1 pr-1 hover:text-white hover:bg-blue-200 ease-in duration-150 "
               value={item}
               onClick={handleOnClick}
