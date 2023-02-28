@@ -58,7 +58,7 @@ const IngredientSelect = () => {
   };
 
   return (
-    <div className="flex flex-row h-full">
+    <div className="flex flex-row h-full ">
       <div className="flex flex-col w-[500px] items-center">
         <div className="text-center mt-1">마이 냉장고</div>
         <div className="flex flex-col w-[300px] h-[220px] m-2 ml-15 bg-yellow-50  items-center overflow-auto scrollbar-hide ">

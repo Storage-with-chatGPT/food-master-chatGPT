@@ -1,5 +1,5 @@
-import IngredientList from "@/components/IngredientList";
-import IngredientSelect from "@/components/IngredientSelect";
+import IngredientList from "@/components/ingredientList";
+import IngredientSelect from "@/components/ingredientSelect";
 
 const Home = () => {
   return (
