@@ -15,7 +15,6 @@ const IngredientSelect = () => {
     (state) => state.ingredientList.SelectIngredients
   );
   const selectIngredientsString = SelectIngredients.join(" ").trim();
-  const selectMenu = useAppSelector((state) => state.recipe.recipe);
 
   const [menus, setMenus] = useState<string[]>([]);
 
@@ -36,15 +35,29 @@ const IngredientSelect = () => {
       quetion,
       name
     );
+    console.log(data.choices[0].text);
     console.log("loading end");
 
     if (name === "menu") {
-      const formatMenuString = data.choices[0].text
+      const test = data.choices[0].text
         .trim()
         .split("\n")
         .map((item) => item.replace(/^\d+\.\s*/, ""));
+
+      const formatMenuString = data.choices[0].text
+        .trim()
+        .split("\n")
+        .map((item) => item.replace(/^\d+\.\s*/, ""))
+        .filter((item) => {
+          if (item === "" || item === ".") {
+            return false;
+          }
+          return true;
+        });
+
+      console.log(test);
+      console.log(formatMenuString);
       setMenus(formatMenuString);
-      console.log(menus);
     }
 
     if (name === "recipe") {
@@ -58,7 +71,7 @@ const IngredientSelect = () => {
   };
 
   return (
-    <div className="flex flex-row h-full ">
+    <div className="flex flex-row h-full">
       <div className="flex flex-col w-[500px] items-center">
         <div className="text-center mt-1">마이 냉장고</div>
         <div className="flex flex-col w-[300px] h-[220px] m-2 ml-15 bg-yellow-50  items-center overflow-auto scrollbar-hide ">

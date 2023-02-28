@@ -9,6 +9,7 @@ export const QuetionChat = (quetionValue: string, type: string) => {
   if (type === "recipe") {
     question = `${quetionValue} 레시피를 정확하게 알려줘`;
   }
+
   console.log(type);
   console.log(quetionValue);
   return axios.post(
