@@ -39,11 +39,6 @@ const IngredientSelect = () => {
     console.log("loading end");
 
     if (name === "menu") {
-      const test = data.choices[0].text
-        .trim()
-        .split("\n")
-        .map((item) => item.replace(/^\d+\.\s*/, ""));
-
       const formatMenuString = data.choices[0].text
         .trim()
         .split("\n")
@@ -55,8 +50,6 @@ const IngredientSelect = () => {
           return true;
         });
 
-      console.log(test);
-      console.log(formatMenuString);
       setMenus(formatMenuString);
     }
 
