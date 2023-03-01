@@ -1,7 +1,6 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { FaMinusSquare } from "react-icons/fa";
-import { GiHamburgerMenu } from "react-icons/gi";
 import {
   allDeleteSelectList,
   removeIngredients,
@@ -41,7 +40,6 @@ const SelectItems = () => {
           ))}
         </div>
       </div>
-      <GiHamburgerMenu className="mt-2 mr-2 text-[20px] cursor-pointer" />
     </div>
   );
 };

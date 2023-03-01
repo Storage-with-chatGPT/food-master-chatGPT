@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { setRecipe } from "@/services/recipe/slice";
 import { useRouter } from "next/router";
 import { CgSpinner } from "react-icons/cg";
+import { showToastMessage } from "@/utils/toastMsg";
 
 const IngredientSelect = () => {
   const router = useRouter();
@@ -23,7 +24,10 @@ const IngredientSelect = () => {
   const handleOnClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { name, value } = e.currentTarget;
     if (SelectIngredients.length < 1) {
-      alert("1개이상의 재료를 선택해주세요.");
+      showToastMessage({
+        message: "1개 이상의 재료를 선택해주세요.",
+        type: "warn",
+      });
       return;
     }
 
@@ -31,39 +35,39 @@ const IngredientSelect = () => {
     if (name === "recipe") quetion = value;
     if (name === "menu") quetion = selectIngredientsString;
 
-    //TODO: 로딩 스피너 만들 시 console 대체
-    console.log("loading");
-    setDisabledBtnState(true);
-    const { data }: AxiosResponse<DataResponse> = await QuetionChat(
-      quetion,
-      name
-    );
-    setDisabledBtnState(false);
-    console.log("loading end");
+    try {
+      setDisabledBtnState(true);
+      const { data }: AxiosResponse<DataResponse> = await QuetionChat(
+        quetion,
+        name
+      );
+      setDisabledBtnState(false);
 
-    setBtnState(false);
+      setBtnState(false);
+      if (name === "menu") {
+        const formatMenuString = data.choices[0].text
+          .trim()
+          .split("\n")
+          .map((item) => item.replace(/^\d+\.\s*/, ""))
+          .filter((item) => {
+            if (item === "" || item === ".") {
+              return false;
+            }
+            return true;
+          });
+        setMenus(formatMenuString);
+      }
 
-    if (name === "menu") {
-      const formatMenuString = data.choices[0].text
-        .trim()
-        .split("\n")
-        .map((item) => item.replace(/^\d+\.\s*/, ""))
-        .filter((item) => {
-          if (item === "" || item === ".") {
-            return false;
-          }
-          return true;
-        });
-      setMenus(formatMenuString);
-    }
-
-    if (name === "recipe") {
-      router.push("/recipe");
-      const formatRecipeString = data.choices[0].text
-        .trim()
-        .split("\n")
-        .filter((item) => item !== "");
-      dispatch(setRecipe(formatRecipeString));
+      if (name === "recipe") {
+        router.push("/recipe");
+        const formatRecipeString = data.choices[0].text
+          .trim()
+          .split("\n")
+          .filter((item) => item !== "");
+        dispatch(setRecipe(formatRecipeString));
+      }
+    } catch (error) {
+      showToastMessage({ message: "잠시후 다시 시도해주세요.", type: "error" });
     }
   };
 

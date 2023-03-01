@@ -1,12 +1,9 @@
 import axios from "axios";
 
 export const QuetionChat = (quetionValue: string, type: string) => {
-  console.log(quetionValue);
-  console.log(type);
   let question = "";
   if (type === "menu") {
     question = `${quetionValue} 을/를 꼭 포함한 음식 메뉴 5개 음식명만 추천해주세요`;
-    console.log(question);
   }
 
   if (type === "recipe") {

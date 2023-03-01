@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { IngredientType } from "@/types";
 import {
@@ -11,6 +11,7 @@ import { BsTrash } from "react-icons/bs";
 import { CiSettings } from "react-icons/ci";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { longValueReplace, validateInput } from "@/utils/validation";
+import { showToastMessage } from "@/utils/toastMsg";
 
 const IngredientBtn = ({ name, state }: IngredientType) => {
   const [editModeState, setEditModeState] = useState(true);
@@ -44,21 +45,34 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
     );
 
     if (editModeInput.length === 0) {
-      alert("빈값은 재료로 등록할 수 없습니다.");
+      showToastMessage({
+        message: "빈값은 재료로 등록할 수 없습니다.",
+        type: "warn",
+      });
       setEditModeInput(name);
       return;
     }
 
     if (!validateInput(editModeInput)) {
-      alert("다시한번 확인해주세요.(특수문자/자음/모음/숫자 금지)");
+      showToastMessage({
+        message: "다시한번 확인해주세요. (특수문자/자음/모음/숫자 금지)",
+        type: "warn",
+      });
       setEditModeInput(name);
       return;
     }
 
     if (duplicationCheck.length > 0) {
-      if (name === editModeInput) alert("현재 선택한 재료명과 동일 합니다.");
-      else {
-        alert("이미 등록 되어있는 재료 입니다.");
+      if (name === editModeInput) {
+        showToastMessage({
+          message: "현재 선택한 재료명과 동일 합니다.",
+          type: "warn",
+        });
+      } else {
+        showToastMessage({
+          message: "이미 등록되어있는 재료 입니다.",
+          type: "warn",
+        });
         setEditModeInput(name);
       }
       return;

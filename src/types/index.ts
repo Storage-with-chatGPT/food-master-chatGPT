@@ -24,3 +24,8 @@ export interface DataResponse {
   object: string;
   useage: Useage[];
 }
+
+export interface Toast {
+  message: string;
+  type: string;
+}
