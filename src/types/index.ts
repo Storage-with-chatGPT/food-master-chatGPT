@@ -1,3 +1,5 @@
+import { Dispatch } from "react";
+
 export interface IngredientType {
   type?: string;
   name: string;
@@ -23,4 +25,14 @@ export interface DataResponse {
   model: string;
   object: string;
   useage: Useage[];
+}
+
+export interface Toast {
+  message: string;
+  type: string;
+}
+
+export interface Delete {
+  deleteName: string;
+  setEditModeState: Dispatch<boolean>;
 }

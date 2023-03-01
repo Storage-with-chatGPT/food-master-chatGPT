@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import IngredientBtn from "./IngredientBtn";
-import SearchInput from "./SearchInput";
 import {
   addIngredientList,
-  selectCategory,
   setIngredientViewList,
 } from "@/services/ingredientList/slice";
 import { categoryBtn } from "@/constants";
 import { RxPlusCircled } from "react-icons/rx";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { validateInput } from "@/utils/validation";
+import { selectCategory } from "@/services/common/slice";
+import SearchInput from "./SearchInput";
+import IngredientBtn from "./IngredientBtn";
+import { showToastMessage } from "@/utils/toastMsg";
 
 const IngredientList = () => {
   const [addBtnState, setAddBtnState] = useState(false);
@@ -18,16 +19,12 @@ const IngredientList = () => {
 
   const dispatch = useAppDispatch();
   const ingredientList = useAppSelector((state) => state.ingredientList);
-  const categoryValue = useAppSelector(
-    (state) => state.ingredientList.category
-  );
-  const searchValue = useAppSelector(
-    (state) => state.ingredientList.inputValue
-  );
+  const categoryValue = useAppSelector((state) => state.common.category);
+  const searchValue = useAppSelector((state) => state.common.inputValue);
   const list = useAppSelector(
     (state) => state.ingredientList.ingredientViewList
   );
-  const category = useAppSelector((state) => state.ingredientList.category);
+  const category = useAppSelector((state) => state.common.category);
 
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(selectCategory(event.currentTarget.value));
@@ -39,18 +36,27 @@ const IngredientList = () => {
     );
 
     if (addIngredientInput.length === 0) {
-      alert("빈값은 재료로 등록할 수 없습니다.");
+      showToastMessage({
+        message: "빈값은 재료로 등록할 수 없습니다.",
+        type: "warn",
+      });
       return;
     }
 
     if (!validateInput(addIngredientInput)) {
-      alert("다시한번 확인해주세요.(특수문자/자음/모음/숫자 금지)");
+      showToastMessage({
+        message: "다시한번 확인해주세요. (특수문자/자음/모음/숫자 금지)",
+        type: "warn",
+      });
       setAddIngredientInput("");
       return;
     }
 
     if (duplicationCheck.length > 0) {
-      alert("이미 등록되어 있는 재료 입니다.");
+      showToastMessage({
+        message: "이미 등록되어 있는 재료 입니다.",
+        type: "warn",
+      });
       setAddIngredientInput("");
       return;
     }
@@ -64,6 +70,10 @@ const IngredientList = () => {
     );
     setAddIngredientInput("");
     setAddBtnState(!addBtnState);
+    showToastMessage({
+      message: `[${addIngredientInput}] 재료가 정상적으로 등록되었습니다`,
+      type: "success",
+    });
   };
 
   const addOnCloseClick = () => {
@@ -132,7 +142,7 @@ const IngredientList = () => {
       <div className="w-auto my-1 flex flex-raw justify-center">
         <SearchInput />
       </div>
-      <div className=" h-[300px] flex flex-raw flex-wrap justify-center  overflow-auto scrollbar-hide ">
+      <div className=" h-[180px] flex flex-raw flex-wrap justify-center  overflow-auto scrollbar-hide ">
         {category === "all" || searchValue !== "" ? (
           ""
         ) : (

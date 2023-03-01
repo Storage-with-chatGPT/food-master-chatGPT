@@ -7,6 +7,8 @@ import Refrigerator from "../../assets/refrigerator.svg";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { setRecipe } from "@/services/recipe/slice";
 import { useRouter } from "next/router";
+import { CgSpinner } from "react-icons/cg";
+import { showToastMessage } from "@/utils/toastMsg";
 
 const IngredientSelect = () => {
   const router = useRouter();
@@ -14,7 +16,7 @@ const IngredientSelect = () => {
   const SelectIngredients = useAppSelector(
     (state) => state.ingredientList.SelectIngredients
   );
-  const selectIngredientsString = SelectIngredients.join(" ").trim();
+  const selectIngredientsString = SelectIngredients.join(", ").trim();
 
   const [menus, setMenus] = useState<string[]>([]);
   const [btnState, setBtnState] = useState(true);
@@ -22,7 +24,10 @@ const IngredientSelect = () => {
   const handleOnClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { name, value } = e.currentTarget;
     if (SelectIngredients.length < 1) {
-      alert("1개이상의 재료를 선택해주세요.");
+      showToastMessage({
+        message: "1개 이상의 재료를 선택해주세요.",
+        type: "warn",
+      });
       return;
     }
 
@@ -30,39 +35,39 @@ const IngredientSelect = () => {
     if (name === "recipe") quetion = value;
     if (name === "menu") quetion = selectIngredientsString;
 
-    //TODO: 로딩 스피너 만들 시 console 대체
-    console.log("loading");
-    setDisabledBtnState(true);
-    const { data }: AxiosResponse<DataResponse> = await QuetionChat(
-      quetion,
-      name
-    );
-    setDisabledBtnState(false);
-    console.log("loading end");
+    try {
+      setDisabledBtnState(true);
+      const { data }: AxiosResponse<DataResponse> = await QuetionChat(
+        quetion,
+        name
+      );
+      setDisabledBtnState(false);
 
-    setBtnState(false);
+      setBtnState(false);
+      if (name === "menu") {
+        const formatMenuString = data.choices[0].text
+          .trim()
+          .split("\n")
+          .map((item) => item.replace(/^\d+\.\s*/, ""))
+          .filter((item) => {
+            if (item === "" || item === ".") {
+              return false;
+            }
+            return true;
+          });
+        setMenus(formatMenuString);
+      }
 
-    if (name === "menu") {
-      const formatMenuString = data.choices[0].text
-        .trim()
-        .split("\n")
-        .map((item) => item.replace(/^\d+\.\s*/, ""))
-        .filter((item) => {
-          if (item === "" || item === ".") {
-            return false;
-          }
-          return true;
-        });
-      setMenus(formatMenuString);
-    }
-
-    if (name === "recipe") {
-      router.push("/recipe");
-      const formatRecipeString = data.choices[0].text
-        .trim()
-        .split("\n")
-        .filter((item) => item !== "");
-      dispatch(setRecipe(formatRecipeString));
+      if (name === "recipe") {
+        router.push("/recipe");
+        const formatRecipeString = data.choices[0].text
+          .trim()
+          .split("\n")
+          .filter((item) => item !== "");
+        dispatch(setRecipe(formatRecipeString));
+      }
+    } catch (error) {
+      showToastMessage({ message: "잠시후 다시 시도해주세요.", type: "error" });
     }
   };
 
@@ -104,6 +109,19 @@ const IngredientSelect = () => {
         </button>
       </div>
       <SelectItems />
+      {disabledBtnState ? (
+        <div className="absolute w-[640px] h-[705px] flex justify-center items-center   bg-slate-400 bg-opacity-80 z-10 ">
+          <div className="w-[200px] h-[30px] text-center flex flex-row flex-wrap">
+            <p className="font-bold text-[20px]">잠시만 기다려주세요</p>
+            <CgSpinner className=" animate-spin mt-1 ml-1 text-[20px]" />
+            <p className="text-[10px]">
+              30초에서 1분의 시간이 걸릴 수 있습니다.
+            </p>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

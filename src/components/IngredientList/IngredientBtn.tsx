@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { IngredientType } from "@/types";
 import {
@@ -11,10 +11,13 @@ import { BsTrash } from "react-icons/bs";
 import { CiSettings } from "react-icons/ci";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { longValueReplace, validateInput } from "@/utils/validation";
+import { showToastMessage } from "@/utils/toastMsg";
+import DeleteConfirm from "../commons/DeleteConfirm";
 
 const IngredientBtn = ({ name, state }: IngredientType) => {
   const [editModeState, setEditModeState] = useState(true);
   const [editModeInput, setEditModeInput] = useState(name);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const dispatch = useAppDispatch();
   const ingredientList = useAppSelector(
     (state) => state.ingredientList.ingredientList
@@ -44,21 +47,34 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
     );
 
     if (editModeInput.length === 0) {
-      alert("빈값은 재료로 등록할 수 없습니다.");
+      showToastMessage({
+        message: "빈값은 재료로 등록할 수 없습니다.",
+        type: "warn",
+      });
       setEditModeInput(name);
       return;
     }
 
     if (!validateInput(editModeInput)) {
-      alert("다시한번 확인해주세요.(특수문자/자음/모음/숫자 금지)");
+      showToastMessage({
+        message: "다시한번 확인해주세요. (특수문자/자음/모음/숫자 금지)",
+        type: "warn",
+      });
       setEditModeInput(name);
       return;
     }
 
     if (duplicationCheck.length > 0) {
-      if (name === editModeInput) alert("현재 선택한 재료명과 동일 합니다.");
-      else {
-        alert("이미 등록 되어있는 재료 입니다.");
+      if (name === editModeInput) {
+        showToastMessage({
+          message: "현재 선택한 재료명과 동일 합니다.",
+          type: "warn",
+        });
+      } else {
+        showToastMessage({
+          message: "이미 등록되어있는 재료 입니다.",
+          type: "warn",
+        });
         setEditModeInput(name);
       }
       return;
@@ -66,11 +82,6 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
 
     setEditModeState(!editModeState);
     dispatch(updateIngredientList({ name, editModeInput }));
-  };
-
-  const deleteIngredient = () => {
-    setEditModeState(!editModeState);
-    dispatch(deleteIngredientList(name));
   };
 
   return editModeState ? (
@@ -102,7 +113,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
           className="text-base absolute top-2 right-11 hover:text-green-300 cursor-pointer"
         />
         <BsTrash
-          onClick={deleteIngredient}
+          onClick={() => setIsDialogOpen(!isDialogOpen)}
           className="text-base absolute top-2 right-6 hover:text-red-300 cursor-pointer"
         />
         <AiOutlineClose
@@ -123,6 +134,11 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
           onChange={handleOnChange}
         />
       </button>
+      {isDialogOpen ? (
+        <DeleteConfirm deleteName={name} setEditModeState={setEditModeState} />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
