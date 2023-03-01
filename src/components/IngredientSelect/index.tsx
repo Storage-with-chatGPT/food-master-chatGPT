@@ -7,6 +7,7 @@ import Refrigerator from "../../assets/refrigerator.svg";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { setRecipe } from "@/services/recipe/slice";
 import { useRouter } from "next/router";
+import { CgSpinner } from "react-icons/cg";
 
 const IngredientSelect = () => {
   const router = useRouter();
@@ -104,6 +105,19 @@ const IngredientSelect = () => {
         </button>
       </div>
       <SelectItems />
+      {disabledBtnState ? (
+        <div className="absolute w-[640px] h-[705px] flex justify-center items-center   bg-slate-400 bg-opacity-80 z-10 ">
+          <div className="w-[200px] h-[30px] text-center flex flex-row flex-wrap">
+            <p className="font-bold text-[20px]">잠시만 기다려주세요</p>
+            <CgSpinner className=" animate-spin mt-1 ml-1 text-[20px]" />
+            <p className="text-[10px]">
+              30초에서 1분의 시간이 걸릴 수 있습니다.
+            </p>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
