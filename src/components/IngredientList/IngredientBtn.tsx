@@ -12,10 +12,12 @@ import { CiSettings } from "react-icons/ci";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { longValueReplace, validateInput } from "@/utils/validation";
 import { showToastMessage } from "@/utils/toastMsg";
+import DeleteConfirm from "../commons/DeleteConfirm";
 
 const IngredientBtn = ({ name, state }: IngredientType) => {
   const [editModeState, setEditModeState] = useState(true);
   const [editModeInput, setEditModeInput] = useState(name);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const dispatch = useAppDispatch();
   const ingredientList = useAppSelector(
     (state) => state.ingredientList.ingredientList
@@ -82,11 +84,6 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
     dispatch(updateIngredientList({ name, editModeInput }));
   };
 
-  const deleteIngredient = () => {
-    setEditModeState(!editModeState);
-    dispatch(deleteIngredientList(name));
-  };
-
   return editModeState ? (
     <div>
       <div className="relative">
@@ -116,7 +113,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
           className="text-base absolute top-2 right-11 hover:text-green-300 cursor-pointer"
         />
         <BsTrash
-          onClick={deleteIngredient}
+          onClick={() => setIsDialogOpen(!isDialogOpen)}
           className="text-base absolute top-2 right-6 hover:text-red-300 cursor-pointer"
         />
         <AiOutlineClose
@@ -137,6 +134,11 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
           onChange={handleOnChange}
         />
       </button>
+      {isDialogOpen ? (
+        <DeleteConfirm deleteName={name} setEditModeState={setEditModeState} />
+      ) : (
+        ""
+      )}
     </div>
   );
 };
