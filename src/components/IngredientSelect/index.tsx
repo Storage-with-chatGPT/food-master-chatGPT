@@ -14,7 +14,7 @@ const IngredientSelect = () => {
   const SelectIngredients = useAppSelector(
     (state) => state.ingredientList.SelectIngredients
   );
-  const selectIngredientsString = SelectIngredients.join(" ").trim();
+  const selectIngredientsString = SelectIngredients.join(", ").trim();
 
   const [menus, setMenus] = useState<string[]>([]);
   const [btnState, setBtnState] = useState(true);

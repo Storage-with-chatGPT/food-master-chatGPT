@@ -1,12 +1,10 @@
-import { searchInputValue } from "@/services/ingredientList/slice";
+import { searchInputValue } from "@/services/common/slice";
 import { useAppDispatch, useAppSelector } from "@/store";
 import React from "react";
 
 const SearchInput = () => {
   const dispatch = useAppDispatch();
-  const searchValue = useAppSelector(
-    (state) => state.ingredientList.inputValue
-  );
+  const searchValue = useAppSelector((state) => state.common.inputValue);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(searchInputValue(event.currentTarget.value.split(" ").join("")));

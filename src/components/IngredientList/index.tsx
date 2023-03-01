@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import IngredientBtn from "./IngredientBtn";
-import SearchInput from "./SearchInput";
 import {
   addIngredientList,
-  selectCategory,
   setIngredientViewList,
 } from "@/services/ingredientList/slice";
 import { categoryBtn } from "@/constants";
 import { RxPlusCircled } from "react-icons/rx";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import { validateInput } from "@/utils/validation";
+import { selectCategory } from "@/services/common/slice";
+import SearchInput from "./SearchInput";
+import IngredientBtn from "./IngredientBtn";
 
 const IngredientList = () => {
   const [addBtnState, setAddBtnState] = useState(false);
@@ -18,16 +18,12 @@ const IngredientList = () => {
 
   const dispatch = useAppDispatch();
   const ingredientList = useAppSelector((state) => state.ingredientList);
-  const categoryValue = useAppSelector(
-    (state) => state.ingredientList.category
-  );
-  const searchValue = useAppSelector(
-    (state) => state.ingredientList.inputValue
-  );
+  const categoryValue = useAppSelector((state) => state.common.category);
+  const searchValue = useAppSelector((state) => state.common.inputValue);
   const list = useAppSelector(
     (state) => state.ingredientList.ingredientViewList
   );
-  const category = useAppSelector((state) => state.ingredientList.category);
+  const category = useAppSelector((state) => state.common.category);
 
   const handleOnClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     dispatch(selectCategory(event.currentTarget.value));
