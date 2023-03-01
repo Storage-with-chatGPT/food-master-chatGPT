@@ -1,12 +1,8 @@
 import { deleteIngredientList } from "@/services/ingredientList/slice";
 import { useAppDispatch } from "@/store";
+import { Delete } from "@/types";
 import { showToastMessage } from "@/utils/toastMsg";
 import { Dispatch, useState } from "react";
-
-interface Delete {
-  deleteName: string;
-  setEditModeState: Dispatch<boolean>;
-}
 
 function DeleteConfirm({ deleteName, setEditModeState }: Delete) {
   const [_, setIsDialogOpen] = useState(false);
