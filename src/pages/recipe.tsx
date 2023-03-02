@@ -12,7 +12,7 @@ const Recipe = () => {
   if (recipe.length < 1) return <PrivateRoute />;
 
   return (
-    <div className="w-full h-full flex justify-center mt-20">
+    <div className="w-screen h-full flex justify-center mt-20">
       <div className="flex flex-col  w-[300px] h-[500px] zigzag ">
         <div
           onClick={() => router.push("/")}

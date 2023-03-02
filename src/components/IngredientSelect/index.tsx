@@ -77,8 +77,8 @@ const IngredientSelect = () => {
   }, [SelectIngredients]);
 
   return (
-    <div className="flex flex-row h-full">
-      <div className="flex flex-col w-[500px] items-center justify-center">
+    <div className="flex flex-row h-full ">
+      <div className="flex flex-col w-[500px] items-center justify-center drop-shadow-lg">
         <div className="flex flex-col w-[200px] h-[220px] m-2 ml-16 overflow-auto scrollbar-hide ">
           {menus.length > 0 ? "" : <Refrigerator className="-ml-11" />}
 
@@ -113,7 +113,7 @@ const IngredientSelect = () => {
       </div>
       <SelectItems />
       {disabledBtnState ? (
-        <div className="absolute w-[550px] h-[705px] flex justify-center items-center   bg-slate-400 bg-opacity-80 z-10  -ml-4 -mt-4">
+        <div className="absolute w-[550px] h-[705px] flex justify-center items-center   bg-slate-300 bg-opacity-70 z-10  -ml-4 -mt-4">
           <div className="w-[200px] h-[30px] text-center flex flex-row flex-wrap">
             <p className="font-bold text-[20px]">잠시만 기다려주세요</p>
             <CgSpinner className=" animate-spin mt-1 ml-1 text-[20px]" />
