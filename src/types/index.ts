@@ -35,4 +35,5 @@ export interface Toast {
 export interface Delete {
   deleteName: string;
   setEditModeState: Dispatch<boolean>;
+  setIsDialogOpen: Dispatch<boolean>;
 }

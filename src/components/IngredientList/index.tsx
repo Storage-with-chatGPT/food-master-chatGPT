@@ -16,6 +16,7 @@ import { showToastMessage } from "@/utils/toastMsg";
 const IngredientList = () => {
   const [addBtnState, setAddBtnState] = useState(false);
   const [addIngredientInput, setAddIngredientInput] = useState("");
+  const [bgColor, setBgColor] = useState("my-red");
 
   const dispatch = useAppDispatch();
   const ingredientList = useAppSelector((state) => state.ingredientList);
@@ -85,6 +86,7 @@ const IngredientList = () => {
     switch (categoryValue) {
       case "all":
         dispatch(setIngredientViewList(ingredientList.ingredientList));
+        setBgColor("bg-my-red");
         break;
       case "meat":
         dispatch(
@@ -94,6 +96,7 @@ const IngredientList = () => {
             )
           )
         );
+        setBgColor("bg-my-orange");
         break;
       case "vegetable":
         dispatch(
@@ -103,6 +106,7 @@ const IngredientList = () => {
             )
           )
         );
+        setBgColor("bg-my-green");
         break;
       case "grain":
         dispatch(
@@ -112,6 +116,7 @@ const IngredientList = () => {
             )
           )
         );
+        setBgColor("bg-my-yellow");
         break;
       case "acc":
         dispatch(
@@ -121,82 +126,87 @@ const IngredientList = () => {
             )
           )
         );
+        setBgColor("bg-my-gray");
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryValue]);
 
   return (
-    <div className="my-7">
-      <div className="flex flex-row justify-center space-x-10">
+    <div className="my-7 w-[550px]">
+      <div className="flex flex-row justify-left">
         {categoryBtn.map((item, idx) => (
           <button
             key={`category_btn_${idx}`}
             onClick={handleOnClick}
-            value={Object.values(item)}
+            value={item.type}
+            className={`text-gray-100 font-bold h-8 w-24 bg-${item.color} opacity-90 rounded-t-xl`}
           >
-            {Object.keys(item)}
+            {Object.values(item.name)}
           </button>
         ))}
       </div>
-      <div className="w-auto my-1 flex flex-raw justify-center">
-        <SearchInput />
-      </div>
-      <div className=" h-[180px] flex flex-raw flex-wrap justify-center  overflow-auto scrollbar-hide ">
-        {category === "all" || searchValue !== "" ? (
-          ""
-        ) : (
-          <button className={`w-20 h-20 border-2 m-1 bg-gray-100 `}>
-            {addBtnState ? (
-              <>
-                <input
-                  className="w-14 pl-2"
-                  type="text"
-                  value={addIngredientInput}
-                  onChange={(event) =>
-                    setAddIngredientInput(event.currentTarget.value)
-                  }
-                />
-                <div className="flex flex-row justify-center mt-3">
-                  <AiOutlineCheck
-                    onClick={addOnClick}
-                    className="border border-gray-200 w-7 mr-0.5 hover:bg-green-300 hover:text-white"
-                  />
-                  <AiOutlineClose
-                    onClick={addOnCloseClick}
-                    className="text-base border border-gray-200 w-7 ml-0.5 hover:bg-red-300 hover:text-white"
-                  />
-                </div>
-              </>
-            ) : (
-              <>
-                <p>재료 추가</p>
-                <RxPlusCircled
-                  onClick={() => setAddBtnState(!addBtnState)}
-                  className="w-full text-2xl text-center text-gray-500 hover:text-blue-300 ease-in duration-150"
-                />
-              </>
-            )}
-          </button>
-        )}
+      <div className={`${bgColor} py-3 opacity-90 rounded-b-lg rounded-tr-lg`}>
+        <div className="w-auto my-2.5 flex flex-raw justify-center ">
+          <SearchInput />
+        </div>
 
-        {searchValue === ""
-          ? list.map((item) => (
-              <IngredientBtn
-                key={item.name}
-                name={item.name}
-                state={item.state}
-              />
-            ))
-          : list
-              .filter((item) => item.name.includes(searchValue) === true)
-              .map((item) => (
+        <div className=" h-[250px] flex flex-raw flex-wrap justify-center  overflow-auto scrollbar-hide ">
+          {category === "all" || searchValue !== "" ? (
+            ""
+          ) : (
+            <button className={`w-20 h-20 border-2 m-1 bg-gray-100 rounded-md`}>
+              {addBtnState ? (
+                <>
+                  <input
+                    className="w-14 pl-2"
+                    type="text"
+                    value={addIngredientInput}
+                    onChange={(event) =>
+                      setAddIngredientInput(event.currentTarget.value)
+                    }
+                  />
+                  <div className="flex flex-row justify-center mt-3">
+                    <AiOutlineCheck
+                      onClick={addOnClick}
+                      className="border border-gray-200 w-7 mr-0.5 hover:bg-green-300 hover:text-white"
+                    />
+                    <AiOutlineClose
+                      onClick={addOnCloseClick}
+                      className="text-base border border-gray-200 w-7 ml-0.5 hover:bg-red-300 hover:text-white"
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p>재료 추가</p>
+                  <RxPlusCircled
+                    onClick={() => setAddBtnState(!addBtnState)}
+                    className="w-full text-2xl text-center text-gray-500 hover:text-blue-300 ease-in duration-150"
+                  />
+                </>
+              )}
+            </button>
+          )}
+
+          {searchValue === ""
+            ? list.map((item) => (
                 <IngredientBtn
                   key={item.name}
                   name={item.name}
                   state={item.state}
                 />
-              ))}
+              ))
+            : list
+                .filter((item) => item.name.includes(searchValue) === true)
+                .map((item) => (
+                  <IngredientBtn
+                    key={item.name}
+                    name={item.name}
+                    state={item.state}
+                  />
+                ))}
+        </div>
       </div>
     </div>
   );

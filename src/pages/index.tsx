@@ -9,7 +9,7 @@ const Home = () => {
           <IngredientSelect />
         </div>
 
-        <div className="bg-red-300 w-full h-[400px] text-center my-0.5">
+        <div className="w-full h-[400px] text-center my-0.5">
           <IngredientList />
         </div>
       </div>
