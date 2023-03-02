@@ -9,6 +9,7 @@ import { setRecipe } from "@/services/recipe/slice";
 import { useRouter } from "next/router";
 import { CgSpinner } from "react-icons/cg";
 import { showToastMessage } from "@/utils/toastMsg";
+import { BsCheckSquareFill } from "react-icons/bs";
 
 const IngredientSelect = () => {
   const router = useRouter();
@@ -76,21 +77,23 @@ const IngredientSelect = () => {
   }, [SelectIngredients]);
 
   return (
-    <div className="flex flex-row h-full">
-      <div className="flex flex-col w-[500px] items-center">
-        <div className="text-center mt-1">마이 냉장고</div>
-        <div className="flex flex-col w-[300px] h-[220px] m-2 ml-15 bg-yellow-50  items-center overflow-auto scrollbar-hide ">
-          {menus.length > 0 ? <p>📖 추천 메뉴</p> : <Refrigerator />}
+    <div className="flex flex-row h-full ">
+      <div className="flex flex-col w-[500px] items-center justify-center drop-shadow-lg">
+        <div className="flex flex-col w-[200px] h-[220px] m-2 ml-16 overflow-auto scrollbar-hide ">
+          {menus.length > 0 ? "" : <Refrigerator className="-ml-11" />}
 
           {menus.map((item, idx) => (
             <button
               name="recipe"
               key={`recipe_${idx}`}
-              className="w-34 text-left border-2 border-red-50 m-1 pr-1 hover:text-white hover:bg-blue-200 ease-in duration-150 "
+              className="w-34 text-left  m-1 pr-1 mt-3 hover:text-my-green hover: ease-in duration-150 "
               value={item}
               onClick={handleOnClick}
             >
-              💡 {item}
+              <div className="flex flex-row ">
+                <BsCheckSquareFill className="text-my-green mt-1.5 mr-1 text-[13px]" />
+                <p className="flex flex-row font-bold tracking-wide">{item}</p>
+              </div>
             </button>
           ))}
         </div>
@@ -101,7 +104,7 @@ const IngredientSelect = () => {
             disabledBtnState
               ? "bg-gray-100 text-gray-200"
               : "bg-white hover:text-white hover:bg-blue-200 text-gray-500"
-          } w-[300px] ml-15 text-center border-1 border-gray-100 `}
+          } w-[300px] ml-15 text-center border-1 border-gray-100 rounded-md ease-in duration-200 font-bold`}
           name="menu"
           disabled={disabledBtnState}
         >
@@ -110,7 +113,7 @@ const IngredientSelect = () => {
       </div>
       <SelectItems />
       {disabledBtnState ? (
-        <div className="absolute w-[640px] h-[705px] flex justify-center items-center   bg-slate-400 bg-opacity-80 z-10 ">
+        <div className="absolute w-[550px] h-[705px] flex justify-center items-center   bg-slate-300 bg-opacity-70 z-10  -ml-4 -mt-4">
           <div className="w-[200px] h-[30px] text-center flex flex-row flex-wrap">
             <p className="font-bold text-[20px]">잠시만 기다려주세요</p>
             <CgSpinner className=" animate-spin mt-1 ml-1 text-[20px]" />

@@ -11,17 +11,17 @@ const SearchInput = () => {
   };
 
   return (
-    <div className="border-2 border-red-200 flex flex-row justify-center">
+    <div className="border-1 border-white flex flex-row justify-center ">
       <input
         type="text"
         value={searchValue}
         placeholder="검색 입력"
         onChange={handleOnChange}
-        className="pl-2"
+        className="pl-2 h-6 text-[15px] rounded-md"
       />
       {searchValue.length > 1 ? (
         <div
-          className="absolute  cursor-pointer  hover:text-blue-300 ml-[160px]  text-right"
+          className="absolute  cursor-pointer  hover:text-blue-300 ml-[155px] "
           onClick={() => dispatch(searchInputValue(""))}
         >
           X

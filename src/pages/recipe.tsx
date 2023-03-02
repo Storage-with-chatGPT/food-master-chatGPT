@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Barcode from "../assets/barcode.svg";
 import { BiArrowBack } from "react-icons/bi";
 import { useRouter } from "next/router";
-import PrivateRoute from "@/components/PrivateRoute";
+import PrivateRoute from "@/components/commons/PrivateRoute";
 
 const Recipe = () => {
   const router = useRouter();
@@ -12,14 +12,14 @@ const Recipe = () => {
   if (recipe.length < 1) return <PrivateRoute />;
 
   return (
-    <div className="w-full h-full flex justify-center mt-20">
+    <div className="w-[600px] h-full flex justify-center mt-10 drop-shadow-lg">
       <div className="flex flex-col  w-[300px] h-[500px] zigzag ">
         <div
           onClick={() => router.push("/")}
           className="flex flex-row ml-1 justify-left cursor-pointer hover:text-blue-300"
         >
-          <BiArrowBack className="text-[13px] mt-[3px]" />
-          <p className="text-[12px] ml-0.5 mt-[1px]">BACK</p>
+          <BiArrowBack className="text-[13px] ml-[5px] mt-[7px]" />
+          <p className="text-[12px] ml-[5px] mt-[5px] drop-shadow-lg">BACK</p>
         </div>
         <header className="text-2xl text-center border-b-2 border-dotted border-gray-300 py-5">
           Recipe

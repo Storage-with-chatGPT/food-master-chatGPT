@@ -58,9 +58,9 @@ export const ingredientListItems = [
 ];
 
 export const categoryBtn = [
-  { 전체: "all" },
-  { 고기: "meat" },
-  { 채소: "vegetable" },
-  { 곡물: "grain" },
-  { 기타: "acc" },
+  { name: "전체", color: "my-red", type: "all" },
+  { name: "고기", color: "my-orange", type: "meat" },
+  { name: "채소", color: "my-green", type: "vegetable" },
+  { name: "곡물", color: "my-yellow", type: "grain" },
+  { name: "기타", color: "my-gray", type: "acc" },
 ];

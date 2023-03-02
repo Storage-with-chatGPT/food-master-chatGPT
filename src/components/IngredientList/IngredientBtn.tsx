@@ -100,7 +100,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
         onClick={handleOnClick}
         className={`w-20 h-20 border-2 m-1 ${
           state ? "bg-blue-300" : "bg-gray-100"
-        } hover:bg-blue-200 ease-in duration-150 `}
+        } hover:bg-blue-200 ease-in duration-150 rounded-md`}
       >
         {longValueReplace(editModeInput)}
       </button>
@@ -113,7 +113,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
           className="text-base absolute top-2 right-11 hover:text-green-300 cursor-pointer"
         />
         <BsTrash
-          onClick={() => setIsDialogOpen(!isDialogOpen)}
+          onClick={() => setIsDialogOpen(true)}
           className="text-base absolute top-2 right-6 hover:text-red-300 cursor-pointer"
         />
         <AiOutlineClose
@@ -125,7 +125,7 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
       <button
         className={`w-20 h-20 border-2 m-1 ${
           state ? "bg-blue-300" : "bg-gray-100"
-        } `}
+        } rounded-md`}
       >
         <input
           className="w-14 pl-2"
@@ -135,7 +135,11 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
         />
       </button>
       {isDialogOpen ? (
-        <DeleteConfirm deleteName={name} setEditModeState={setEditModeState} />
+        <DeleteConfirm
+          deleteName={name}
+          setEditModeState={setEditModeState}
+          setIsDialogOpen={setIsDialogOpen}
+        />
       ) : (
         ""
       )}
