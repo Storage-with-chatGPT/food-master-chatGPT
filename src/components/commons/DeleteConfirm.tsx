@@ -2,7 +2,6 @@ import { deleteIngredientList } from "@/services/ingredientList/slice";
 import { useAppDispatch } from "@/store";
 import { Delete } from "@/types";
 import { showToastMessage } from "@/utils/toastMsg";
-import { Dispatch, useState } from "react";
 
 function DeleteConfirm({
   deleteName,

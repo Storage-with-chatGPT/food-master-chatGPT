@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import {
   addIngredientList,
@@ -12,11 +12,15 @@ import { selectCategory } from "@/services/common/slice";
 import SearchInput from "./SearchInput";
 import IngredientBtn from "./IngredientBtn";
 import { showToastMessage } from "@/utils/toastMsg";
+import { BiDownArrowCircle } from "react-icons/bi";
 
 const IngredientList = () => {
   const [addBtnState, setAddBtnState] = useState(false);
   const [addIngredientInput, setAddIngredientInput] = useState("");
   const [bgColor, setBgColor] = useState("my-red");
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [istBtnVisible, setIsBtnVisible] = useState(true);
 
   const dispatch = useAppDispatch();
   const ingredientList = useAppSelector((state) => state.ingredientList);
@@ -132,6 +136,35 @@ const IngredientList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryValue]);
 
+  const moveBottomEnd = () => {
+    scrollRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+    const elementTop = scrollRef.current?.getBoundingClientRect().top;
+    const DownBtn = document.getElementById("DownBtn");
+    if (DownBtn) {
+      DownBtn.style.display = "none";
+    }
+  };
+
+  useEffect(() => {
+    const ingredients = document.getElementById("scrollDiv");
+    const handleScroll = () => {
+      if (ingredients) {
+        const scrollHeight = ingredients.scrollHeight;
+        const scrollTop = ingredients.scrollTop;
+        const clientHeight = ingredients.clientHeight;
+        const condition = scrollHeight !== scrollTop + clientHeight;
+        setIsBtnVisible(condition);
+      }
+    };
+    ingredients?.addEventListener("scroll", handleScroll);
+    return () => {
+      ingredients?.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <div className="my-7 w-[550px]">
       <div className="flex flex-row justify-left">
@@ -140,22 +173,31 @@ const IngredientList = () => {
             key={`category_btn_${idx}`}
             onClick={handleOnClick}
             value={item.type}
-            className={`text-gray-100 font-bold h-8 w-24 bg-${item.color} opacity-90 rounded-t-xl`}
+            className={`text-gray-100 h-8 w-24 bg-${item.color} opacity-90 rounded-t-xl `}
           >
-            {Object.values(item.name)}
+            <p className="font-bold drop-shadow-lg">
+              {Object.values(item.name)}
+            </p>
           </button>
         ))}
       </div>
-      <div className={`${bgColor} py-3 opacity-90 rounded-b-lg rounded-tr-lg`}>
+      <div
+        className={`${bgColor} h-[345px] py-3 opacity-90 rounded-b-lg rounded-tr-lg drop-shadow-lg`}
+      >
         <div className="w-auto my-2.5 flex flex-raw justify-center ">
           <SearchInput />
         </div>
 
-        <div className=" h-[250px] flex flex-raw flex-wrap justify-center  overflow-auto scrollbar-hide ">
+        <div
+          id="scrollDiv"
+          className=" h-[250px] flex flex-raw flex-wrap justify-center  overflow-auto scrollbar-hide drop-shadow-lg "
+        >
           {category === "all" || searchValue !== "" ? (
             ""
           ) : (
-            <button className={`w-20 h-20 border-2 m-1 bg-gray-100 rounded-md`}>
+            <button
+              className={`w-20 h-20 border-2 m-1 bg-gray-100 rounded-md `}
+            >
               {addBtnState ? (
                 <>
                   <input
@@ -206,7 +248,19 @@ const IngredientList = () => {
                     state={item.state}
                   />
                 ))}
+          <div ref={scrollRef}></div>
         </div>
+      </div>
+      <div className="flex justify-center">
+        {list.length > 16 && istBtnVisible ? (
+          <BiDownArrowCircle
+            id="DownBtn"
+            onClick={moveBottomEnd}
+            className="fixed text-white text-[30px] -mt-8 animate-bounce cursor-pointer"
+          />
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
