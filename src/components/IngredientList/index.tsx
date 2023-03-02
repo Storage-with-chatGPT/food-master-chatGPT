@@ -256,7 +256,7 @@ const IngredientList = () => {
           <BiDownArrowCircle
             id="DownBtn"
             onClick={moveBottomEnd}
-            className="fixed text-white text-[30px] -mt-8 animate-bounce cursor-pointer"
+            className="text-white text-[30px] -mt-8 animate-bounce cursor-pointer"
           />
         ) : (
           ""

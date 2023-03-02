@@ -24,6 +24,7 @@ const IngredientSelect = () => {
   const [disabledBtnState, setDisabledBtnState] = useState(false);
   const handleOnClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const { name, value } = e.currentTarget;
+
     if (SelectIngredients.length < 1) {
       showToastMessage({
         message: "1개 이상의 재료를 선택해주세요.",
