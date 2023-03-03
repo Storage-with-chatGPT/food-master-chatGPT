@@ -1,16 +1,12 @@
-import React from "react";
-import { useAppDispatch, useAppSelector } from "@/store";
-import { FaMinusSquare } from "react-icons/fa";
-import {
-  allDeleteSelectList,
-  removeIngredients,
-} from "@/services/ingredientList/slice";
+import React from 'react';
+import { FaMinusSquare } from 'react-icons/fa';
+
+import { allDeleteSelectList, removeIngredients } from '@/services/ingredientList/slice';
+import { useAppDispatch, useAppSelector } from '@/store';
 
 const SelectItems = () => {
   const dispatch = useAppDispatch();
-  const selectIngredients = useAppSelector(
-    (state) => state.ingredientList.SelectIngredients
-  );
+  const selectIngredients = useAppSelector((state) => state.ingredientList.SelectIngredients);
 
   return (
     <div className="flex flex-row">
@@ -27,17 +23,13 @@ const SelectItems = () => {
         <div className="flex flex-col w-32 text-white text-sm text-left ml-9 h-[190px] overflow-auto scrollbar-hide">
           {selectIngredients.map((item, idx) => (
             <button
-              onClick={(event) =>
-                dispatch(removeIngredients(event.currentTarget.value))
-              }
+              onClick={(event) => dispatch(removeIngredients(event.currentTarget.value))}
               value={item}
               key={`select_${idx}`}
               className="flex flex-row cursor-pointer"
             >
               <FaMinusSquare className="text-red-300 mt-1 mr-1" />
-              <p className="hover:text-red-300 font-bold tracking-wide">
-                {item}
-              </p>
+              <p className="hover:text-red-300 font-bold tracking-wide">{item}</p>
             </button>
           ))}
         </div>

@@ -1,13 +1,14 @@
-import { searchInputValue } from "@/services/common/slice";
-import { useAppDispatch, useAppSelector } from "@/store";
-import React from "react";
+import React from 'react';
+
+import { searchInputValue } from '@/services/common/slice';
+import { useAppDispatch, useAppSelector } from '@/store';
 
 const SearchInput = () => {
   const dispatch = useAppDispatch();
   const searchValue = useAppSelector((state) => state.common.inputValue);
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(searchInputValue(event.currentTarget.value.split(" ").join("")));
+    dispatch(searchInputValue(event.currentTarget.value.split(' ').join('')));
   };
 
   return (
@@ -22,12 +23,12 @@ const SearchInput = () => {
       {searchValue.length > 1 ? (
         <div
           className="absolute  cursor-pointer  hover:text-blue-300 ml-[155px] "
-          onClick={() => dispatch(searchInputValue(""))}
+          onClick={() => dispatch(searchInputValue(''))}
         >
           X
         </div>
       ) : (
-        ""
+        ''
       )}
     </div>
   );

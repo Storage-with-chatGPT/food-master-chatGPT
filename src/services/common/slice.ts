@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
-  category: "all",
-  inputValue: "",
+  category: 'all',
+  inputValue: '',
 };
 
 export const commonSlice = createSlice({
-  name: "common",
+  name: 'common',
   initialState,
   reducers: {
     // 카테고리 선택

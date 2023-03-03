@@ -1,8 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import ingredientListReducer from "@/services/ingredientList/slice";
-import recipeReducer from "@/services/recipe/slice";
-import commonReducer from "@/services/common/slice";
+import { configureStore } from '@reduxjs/toolkit';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+
+import commonReducer from '@/services/common/slice';
+import ingredientListReducer from '@/services/ingredientList/slice';
+import recipeReducer from '@/services/recipe/slice';
 
 export const store = configureStore({
   reducer: {

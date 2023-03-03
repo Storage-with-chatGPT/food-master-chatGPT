@@ -1,6 +1,7 @@
-import { ingredientListItems } from "@/constants";
-import { IngredientType } from "@/types";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { ingredientListItems } from '@/constants';
+import { IngredientType } from '@/types';
 
 const initialState = {
   SelectIngredients: [] as string[],
@@ -9,36 +10,24 @@ const initialState = {
 };
 
 export const ingredientListSlice = createSlice({
-  name: "ingredientList",
+  name: 'ingredientList',
   initialState,
   reducers: {
     // 재료 선택 리스트에 추가
     addIngredients: (state, action: PayloadAction<string>) => {
       state.SelectIngredients.push(action.payload);
-      state.ingredientList[
-        state.ingredientList.findIndex((value) => value.name === action.payload)
-      ].state = true;
+      state.ingredientList[state.ingredientList.findIndex((value) => value.name === action.payload)].state = true;
 
-      state.ingredientViewList[
-        state.ingredientViewList.findIndex(
-          (value) => value.name === action.payload
-        )
-      ].state = true;
+      state.ingredientViewList[state.ingredientViewList.findIndex((value) => value.name === action.payload)].state =
+        true;
     },
     // 재료 선택 리스트에서 제거
     removeIngredients: (state, action: PayloadAction<string>) => {
-      state.SelectIngredients = state.SelectIngredients.filter(
-        (value) => value !== action.payload
-      );
-      state.ingredientList[
-        state.ingredientList.findIndex((value) => value.name === action.payload)
-      ].state = false;
+      state.SelectIngredients = state.SelectIngredients.filter((value) => value !== action.payload);
+      state.ingredientList[state.ingredientList.findIndex((value) => value.name === action.payload)].state = false;
 
-      state.ingredientViewList[
-        state.ingredientViewList.findIndex(
-          (value) => value.name === action.payload
-        )
-      ].state = false;
+      state.ingredientViewList[state.ingredientViewList.findIndex((value) => value.name === action.payload)].state =
+        false;
     },
 
     // 재료 선택 리스트 전체 삭제
@@ -61,28 +50,18 @@ export const ingredientListSlice = createSlice({
 
     // 재료 리스트 이름 변경
     updateIngredientList: (state, action) => {
-      state.ingredientList[
-        state.ingredientList.findIndex(
-          (value) => value.name === action.payload.name
-        )
-      ].name = action.payload.editModeInput;
+      state.ingredientList[state.ingredientList.findIndex((value) => value.name === action.payload.name)].name =
+        action.payload.editModeInput;
 
-      state.ingredientViewList[
-        state.ingredientViewList.findIndex(
-          (value) => value.name === action.payload.name
-        )
-      ].name = action.payload.editModeInput;
+      state.ingredientViewList[state.ingredientViewList.findIndex((value) => value.name === action.payload.name)].name =
+        action.payload.editModeInput;
     },
 
     // 재료 리스트삭제
     deleteIngredientList: (state, action: PayloadAction<string>) => {
-      state.ingredientList = state.ingredientList.filter(
-        (value) => value.name !== action.payload
-      );
+      state.ingredientList = state.ingredientList.filter((value) => value.name !== action.payload);
 
-      state.ingredientViewList = state.ingredientViewList.filter(
-        (value) => value.name !== action.payload
-      );
+      state.ingredientViewList = state.ingredientViewList.filter((value) => value.name !== action.payload);
     },
   },
 });

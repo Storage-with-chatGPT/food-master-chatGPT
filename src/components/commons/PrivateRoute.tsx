@@ -1,10 +1,10 @@
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 
 const PrivateRoute = () => {
   const router = useRouter();
   useEffect(() => {
-    router.push("/");
+    router.push('/');
   }, [router]);
   return <div></div>;
 };

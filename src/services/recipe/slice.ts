@@ -1,15 +1,15 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
   recipe: [] as string[],
 };
 
 export const recipeSlice = createSlice({
-  name: "recipe",
+  name: 'recipe',
   initialState,
   reducers: {
     setRecipe: (state, action: PayloadAction<string[]>) => {
-      state.recipe = state.recipe.filter((item) => item === "");
+      state.recipe = state.recipe.filter((item) => item === '');
       action.payload.map((item) => state.recipe.push(item));
     },
   },
