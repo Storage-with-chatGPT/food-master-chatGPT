@@ -135,7 +135,7 @@ const IngredientList = () => {
   }, []);
 
   return (
-    <div className="my-7 w-[550px]">
+    <div className="mt-3 w-[550px]">
       <div className="flex flex-row justify-left">
         {categoryBtn.map((item, idx) => (
           <button

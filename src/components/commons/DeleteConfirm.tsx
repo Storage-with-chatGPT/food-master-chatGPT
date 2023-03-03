@@ -17,7 +17,7 @@ function DeleteConfirm({ deleteName, setEditModeState, setIsDialogOpen }: Delete
 
   return (
     <div className="relative">
-      <div className="fixed inset-0 w-full h-full bg-gray-500 bg-opacity-75 z-50 flex items-center justify-center">
+      <div className="fixed inset-0 w-full h-full z-50 flex items-center justify-center">
         <div className="bg-white rounded-lg p-8 z-20">
           <p className="mb-1 text-center font-bold">[{deleteName}] </p>
           <p className="mb-4">재료를 삭제하시겠습니까? </p>
