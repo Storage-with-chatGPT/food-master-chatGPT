@@ -16,19 +16,17 @@ function DeleteConfirm({ deleteName, setEditModeState, setIsDialogOpen }: Delete
   };
 
   return (
-    <div className="relative">
-      <div className="fixed inset-0 w-full h-full z-50 flex items-center justify-center">
-        <div className="bg-white rounded-lg p-8 z-20">
-          <p className="mb-1 text-center font-bold">[{deleteName}] </p>
-          <p className="mb-4">재료를 삭제하시겠습니까? </p>
-          <div className="flex justify-end">
-            <button className="px-4 py-2 bg-gray-500 text-white mr-4 rounded-md" onClick={() => setIsDialogOpen(false)}>
-              Cancel
-            </button>
-            <button className="px-4 py-2 bg-red-500 text-white rounded-md" onClick={handleDelete}>
-              Delete
-            </button>
-          </div>
+    <div className="fixed left-0 -top-0 w-full h-full z-20 flex items-center justify-center">
+      <div className=" bg-white rounded-lg p-8 z-20">
+        <p className="mb-1 text-center font-bold">[{deleteName}] </p>
+        <p className="mb-4">재료를 삭제하시겠습니까? </p>
+        <div className="flex justify-end">
+          <button className="px-4 py-2 bg-gray-500 text-white mr-4 rounded-md" onClick={() => setIsDialogOpen(false)}>
+            Cancel
+          </button>
+          <button className="px-4 py-2 bg-red-500 text-white rounded-md" onClick={handleDelete}>
+            Delete
+          </button>
         </div>
       </div>
     </div>

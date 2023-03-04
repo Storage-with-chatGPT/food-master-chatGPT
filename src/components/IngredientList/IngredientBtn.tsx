@@ -118,12 +118,13 @@ const IngredientBtn = ({ name, state }: IngredientType) => {
       <button className={`w-20 h-20 border-2 m-1 ${state ? 'bg-blue-300' : 'bg-gray-100'} rounded-md`}>
         <input className="w-14 pl-2" type="text" value={editModeInput} onChange={handleOnChange} />
       </button>
-
-      {isDialogOpen ? (
-        <DeleteConfirm deleteName={name} setEditModeState={setEditModeState} setIsDialogOpen={setIsDialogOpen} />
-      ) : (
-        ''
-      )}
+      <div className="absolute">
+        {isDialogOpen ? (
+          <DeleteConfirm deleteName={name} setEditModeState={setEditModeState} setIsDialogOpen={setIsDialogOpen} />
+        ) : (
+          ''
+        )}
+      </div>
     </div>
   );
 };

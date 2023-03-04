@@ -109,7 +109,7 @@ const IngredientSelect = () => {
       </div>
       <SelectItems />
       {disabledBtnState ? (
-        <div className="absolute w-[550px] h-[705px] flex justify-center items-center   bg-slate-300 bg-opacity-70 z-10  -ml-4 -mt-4">
+        <div className="absolute w-[550px] h-[705px] flex justify-center items-center   bg-slate-300 bg-opacity-70 z-10  -ml-2 -mt-2">
           <div className="w-[200px] h-[30px] text-center flex flex-row flex-wrap">
             <p className="font-bold text-[20px]">잠시만 기다려주세요</p>
             <CgSpinner className=" animate-spin mt-1 ml-1 text-[20px]" />
