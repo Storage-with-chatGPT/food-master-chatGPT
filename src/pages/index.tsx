@@ -1,7 +1,7 @@
 import Footer from '@/components/commons/Footer';
 import Header from '@/components/commons/Header';
-import IngredientList from '@/components/ingredientList';
-import IngredientSelect from '@/components/ingredientSelect';
+import IngredientList from '@/components/ingredientList/index';
+import IngredientSelect from '@/components/ingredientSelect/index';
 
 const Home = () => {
   return (
