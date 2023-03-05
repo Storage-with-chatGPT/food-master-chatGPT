@@ -7,7 +7,6 @@ const nextConfig = {
   reactStrictMode: true,
   assetPrefix: !debug ? `/${repository}/` : '',
   trailingSlash: true,
-
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/i,
